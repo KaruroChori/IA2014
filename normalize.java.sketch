@@ -46,10 +46,10 @@ public double[][] doIt(int image[][], int width, int height){
 			//per fare calcoli sull'immagine in seguito...
 
 			//OPTION:2[
-			temp[w][h]=(double)image[w][h]-mean+128L;				//Allinea la media
-			temp[w][h]/=Math.sqrt((double)variance)*128L;			//"normalizza" secondo la varianza...
-			if(temp[w][h]<0L)temp[w][h]=0L;							//Satura i pezzi fuori dominio
-			else if(temp[w][h]>255L)temp[w][h]=255L;				//Satura i pezzi fuori dominio
+			temp[w][h]=(double)image[w][h]-mean+128L;						//Allinea la media
+			temp[w][h]=temp[w][h]/Math.sqrt((double)variance)*128L;			//"normalizza" secondo la varianza...
+			if(temp[w][h]<0L)temp[w][h]=0L;									//Satura i pezzi fuori dominio
+			else if(temp[w][h]>255L)temp[w][h]=255L;						//Satura i pezzi fuori dominio
 			//]
 		}
 	}
