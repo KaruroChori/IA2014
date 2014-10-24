@@ -7,7 +7,7 @@
 using namespace std;
 
 
-void doIt(int *image, int *temp, int width, int height,int sigma){
+void doIt(int *image, int *temp, int width, int height,double sigma){
 
 	int times[256];
 	long long int mean=0;
@@ -31,7 +31,7 @@ void doIt(int *image, int *temp, int width, int height,int sigma){
 
 	double stddev=sqrt((double)variance);
 	
-	//cout<<"Mean: "<<mean<<" Variance: "<<variance<<" "<<stddev;
+	cout<<"Mean: "<<mean<<" Variance: "<<variance<<" "<<stddev;
 
 	for(int h=0;h<height;h++){
 		for(int w=0;w<width;w++){
@@ -40,22 +40,22 @@ void doIt(int *image, int *temp, int width, int height,int sigma){
 			//per fare calcoli sull'immagine in seguito...
 
 			//OPTION:2[
-			temp[w+h*width]=image[w+h*width]-mean;									//Allinea la media allo 0
-			if(temp[w+h*width]<(-(double)sigma*stddev))temp[w+h*width]=-128;		//Satura i pezzi fuori dominio
-			else if(temp[w+h*width]>((double)sigma*stddev))temp[w+h*width]=127;		//Satura i pezzi fuori dominio
-			else temp[w+h*width]*=(double)256/((double)sigma*(double)stddev);		//Riscalo il dominio dei colori...
+			temp[w+h*width]=image[w+h*width]-mean;							//Allinea la media allo 0
+			if(temp[w+h*width]<(-(double)sigma*stddev))temp[w+h*width]=-128;					//Satura i pezzi fuori dominio
+			else if(temp[w+h*width]>((double)sigma*stddev))temp[w+h*width]=127;						//Satura i pezzi fuori dominio
+			else temp[w+h*width]=(double)temp[w+h*width]*((double)sigma*(double)stddev)/(double)256;									//Riscalo il dominio dei colori...
 			temp[w+h*width]+=128;
 			//]
 		}
 	}
 }
 
-int main(){
+int main(int argc, char*argv[]){
 	  unsigned error;
 	  unsigned char* image=NULL;
 	  unsigned width, height;
 
-	  error = lodepng_decode32_file(&image, &width, &height, "test.png");
+	  error = lodepng_decode32_file(&image, &width, &height, argv[1]);
 	  if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
 
 
@@ -68,7 +68,7 @@ int main(){
 	}
 	
 	
-	doIt((int*)(temp1),(int*)(temp2),width,height,3);
+	doIt((int*)(temp1),(int*)(temp2),width,height,1);
 	
 	
 	for(int i=0;i!=height*width;i++){
@@ -77,7 +77,7 @@ int main(){
 	}
 	
 	
-	error = lodepng_encode32_file("test3.png", image, width, height);
+	error = lodepng_encode32_file(argv[2], image, width, height);
 	/*if there's an error, display it*/
 	if(error) printf("error %u: %s\n", error, lodepng_error_text(error));
 	
