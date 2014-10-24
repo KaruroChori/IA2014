@@ -1,0 +1,58 @@
+// Suppongo gli venga data in pasto un'immagine già in scala di grigi,
+// altrimenti basta qualche banale modifica. Non l'ho testato, è solo una 
+// proof of concept che dovrebbe essere perlomeno sensata. Invito a testarla 
+// su una piccola matrice di numeri per verificare un funzionamento sensato
+// in modo da isolare i problemi. 
+
+public double[][] doIt(int image[][], int width, int height){
+	double temp[][]=new int[width][height];
+	int times[]=new int[256];
+	long mean=0;
+	long variance=0;
+
+	// Valuto la distribuzione del colore e la media
+	for(int h=0;h<height;h++){
+		for(int w=0;w<height;w++){
+			times[image[w][h]]++;
+			mean+=image[w][h];
+		}
+	}
+	
+	mean/=(width*height);
+	
+	// Calcolo la varianza
+	for(int i=0;i<256;i++){
+		variance+=Math.pow(image[w][h]-mean,2)*times[i];
+	}
+
+	variance/=(width*height);
+	
+	// Normalizzo tutti i valori, nel dominio [0,255], a media in 128 e
+	// varianza 1
+	
+	for(int h=0;h<height;h++){
+		for(int w=0;w<height;w++){
+			
+			//Queste due righe operano la normalizzazione. Teoricamente noi dovremo usare l'immagine così
+			//anche per il calcolo dell'immagine integrale. Riconvertirla in immagine è possibile, perdendo 
+			//delle componenti troppo esterne  ma non lo trovo l'approccio giusto da seguire se non come 
+			//semplice debug visivo...
+			//OPTION:1[
+			temp[w][h]=(double)image[w][h]-mean;
+			temp[w][h]/=Math.sqrt((double)variance);
+			//]
+			
+			//Per una normalizzazione visibile tenete questa parte invece. Ma ripeto non è molto bello usarla 
+			//per fare calcoli sull'immagine in seguito...
+
+			//OPTION:2[
+			temp[w][h]=(double)image[w][h]-mean+128L;				//Allinea la media
+			temp[w][h]/=Math.sqrt((double)variance)*128L;			//"normalizza" secondo la varianza...
+			if(temp[w][h]<0L)temp[w][h]=0L;							//Satura i pezzi fuori dominio
+			else if(temp[w][h]>255L)temp[w][h]=255L;				//Satura i pezzi fuori dominio
+			//]
+		}
+	}
+	
+	return temp;
+}
