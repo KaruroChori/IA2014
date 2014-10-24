@@ -50,6 +50,7 @@ void doIt(int *image, int *temp, int width, int height,double sigma){
 	}
 }
 
+//Warning no check on argv and argc, just for testing purpose!
 int main(int argc, char*argv[]){
 	  unsigned error;
 	  unsigned char* image=NULL;
