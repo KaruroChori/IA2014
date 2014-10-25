@@ -15,6 +15,7 @@ public class GrayImage {
     }
     
     public int[][] getGrayMatrixImage() {
+        int[][] mtrxGrImg = new int[width][height];
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 int color = matrixGrayImage[w][h];
@@ -22,14 +23,14 @@ public class GrayImage {
                 int green = (color >>8) & 0xFF;
                 int blue = (color) & 0xFF;
                 int sum = (int)(red*0.299 + green*0.587 + blue*0.114);   
-                matrixGrayImage[w][h] = sum;
+                mtrxGrImg[w][h] = sum;
             }
         } 
-        return matrixGrayImage;
+        return mtrxGrImg;
     }
     
     public BufferedImage getGrayImage() {
-        BufferedImage grayImage = new BufferedImage(width,height,TYPE_INT_RGB);
+        BufferedImage grayImage = new BufferedImage(width,height,TYPE_INT_RGB);        
         for (int h = 0; h < height; h++) {            
             for (int w = 0; w < width; w++) {
                 int sum = matrixGrayImage[w][h];
