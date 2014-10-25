@@ -66,7 +66,7 @@ public class NoiseReduction {
         for (int h = 0; h < height; h++) {            
             for (int w = 0; w < width; w++) {
                 int sum = noNoiseMatrixGrayImage[w][h];
-                int grayColor = ((255 & 0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8)  | ((sum & 0xFF) << 0);
+                int grayColor = ((0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8)  | ((sum & 0xFF) << 0);
                 noNoiseGrayImage.setRGB(w,h,grayColor);
             }
         }
@@ -74,15 +74,16 @@ public class NoiseReduction {
     }
         
     //SPERIMENTALE PER ORA NON FUNZIONA
+    //edit: karurochori non so se ora va, ma quel cast era necessario
     public BufferedImage getNoNoiseColorImage() {
         BufferedImage noNoiseColorImage = new BufferedImage(width,height,TYPE_INT_RGB);
         for (int h = 0; h < height; h++) {            
             for (int w = 0; w < width; w++) {
                 int sum = noNoiseMatrixGrayImage[w][h];
-                int red = (int)(sum/0.299); //ERRORE
-                int blue = (int)(sum/0.114); //ERRORE
-                int green = (int)(sum/0.587); //ERRORE
-                int grayColor = ((255 & 0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8)  | ((blue & 0xFF) << 0); //ERRORE
+                int red = (int)((double)sum/0.299); //ERRORE
+                int blue = (int)((double)sum/0.114); //ERRORE
+                int green = (int)((double)sum/0.587); //ERRORE
+                int grayColor = ((0xFF) << 24) | ((red & 0xFF) << 16) | ((green & 0xFF) << 8)  | ((blue & 0xFF) << 0); //ERRORE
                 noNoiseColorImage.setRGB(w,h,grayColor);
             }
         }
