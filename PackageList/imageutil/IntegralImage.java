@@ -15,6 +15,7 @@ public class IntegralImage {
         squaredMatrixIntegralImageGray = new int[width][height];
     }
     
+    //Sicuri dell'ordinamento h,w ?
     public void getMatrixIntegralImage() {
         for(int h =0; h < height; h++) {
             int sumOfColumn=0;
