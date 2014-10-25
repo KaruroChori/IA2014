@@ -3,8 +3,7 @@ package imageutil;
 import java.awt.image.BufferedImage;
 
 public class ImageToMatrix {
-    
-    private BufferedImage image;
+        private BufferedImage image;
     private int[][] matrixImage;
     private int width, height;
             
