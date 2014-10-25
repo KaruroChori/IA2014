@@ -7,15 +7,16 @@ public class GrayImage {
     
     private int[][] matrixGrayImage;
     private int height, width;
+    int[][] mtrxGrImg;
     
     public GrayImage(int[][] matrix) {
         matrixGrayImage = matrix;
         width = matrixGrayImage.length;
         height = matrixGrayImage[0].length;
+        mtrxGrImg = new int[width][height];
     }
     
     public int[][] getGrayMatrixImage() {
-        int[][] mtrxGrImg = new int[width][height];
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 int color = matrixGrayImage[w][h];
