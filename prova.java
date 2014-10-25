@@ -1,1 +1,0 @@
-E' solo una prova.
