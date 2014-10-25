@@ -8,8 +8,10 @@
 
 ---OGNI CLASSE INSERITA DOVRA AVERE UN PACKAGE DI RIFERIMENTO E DOVRÀ ESSERE INSERITA NELLA CORRISPETTIVA CARTELLA.
    SIETE LIBERI DI CREARE QUANTI PACKAGE VOLETE AGGIUNGENDO CARTELLE ALLA CARTELLA "PACKAGELIST".
-   AD ESEMPIO LE UTILITÀ DI PRE-PROCESSING GRAFICO LE INSERIAMO IN UN PACKAGE CHIAMATO "IMAGEUTIL" E COSÌ VIA. 
-   NOTA BENE : Quando importate un'altra classe da un'altro package fatelo così: import NomePackage.NomeClasse. Ricodatevi di inserire nella classe come prima riga questa riga "package NOMEPACKAGE" senza virgolette.
+   AD ESEMPIO LE UTILITÀ DI PRE-PROCESSING GRAFICO LE INSERIAMO IN UN PACKAGE CHIAMATO "imageutil" E COSÌ VIA. 
+   NOTA BENE : Quando importate un'altra classe da un'altro package fatelo così: import NomePackage.NomeClasse. 
+   Ricodatevi di inserire nella classe come prima riga questa riga "package nomepackage;" senza virgolette.
+   Mi raccomando i nomi dei package tutti in MINUSCOLO.
 
 ---QUANDO STATE LAVORANDO A QUALCOSA SEGNALATELO SUL FILE "AL LAVORO SU" INDICANDO NOME, TIMESTAMP E SU CHE CLASSE 
    STATE LAVORANDO.
