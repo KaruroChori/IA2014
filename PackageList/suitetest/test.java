@@ -14,10 +14,11 @@ public class test {
             BufferedImage img = ImageIO.read(new File("img.jpg"));
             ImageToMatrix tmp = new ImageToMatrix(img);
             GrayImage newimg = new GrayImage(tmp.getMatrix());
-            NoiseReduction nonoise = new NoiseReduction(newimg.getGrayMatrixImage());                                         
+            GrayScaleImageEqualization equalized = new GrayScaleImageEqualization(newimg.getGrayMatrixImage());
+            NoiseReduction nonoise = new NoiseReduction(equalized.getMatrixEqualized());
             nonoise.getNoNoiseMatrixGrayImage();
-            newimg.getGrayMatrixImage(); 
-            ImageIO.write(newimg.getGrayImage(),"JPG",new File("gray.jpg"));            
+            ImageIO.write(newimg.getGrayImage(),"JPG",new File("gray.jpg"));
+            ImageIO.write(equalized.getImageEqualized(),"JPG",new File("equalized.jpg"));
             ImageIO.write(nonoise.getNoNoiseGrayImage(),"JPG",new File("norumorgray.jpg"));
             //ImageIO.write(nonoise.getNoNoiseColorImage(),"JPG",new File("norumorcolor.jpg"));
         }
