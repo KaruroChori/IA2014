@@ -35,7 +35,7 @@ public class GrayImage {
         for (int h = 0; h < height; h++) {            
             for (int w = 0; w < width; w++) {
                 int sum = matrixGrayImage[w][h];
-                //255=0xff quindi è tauologico basta 0xFF<<24
+                //255=0xff quindi è tauologico basta 0xFF<<24 ENRICO ??
                 int grayColor = ((255 & 0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8)  | ((sum & 0xFF) << 0);
                 grayImage.setRGB(w,h,grayColor);
             }

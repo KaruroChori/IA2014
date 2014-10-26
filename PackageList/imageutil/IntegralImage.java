@@ -15,15 +15,16 @@ public class IntegralImage {
         squaredMatrixIntegralImageGray = new int[width][height];
     }
     
-    //Sicuri dell'ordinamento h,w ?
+    //Sicuri dell'ordinamento h,w ? ENRICO FIXED
+
     public void getMatrixIntegralImage() {
         for(int h =0; h < height; h++) {
             int sumOfColumn=0;
             int sumOfColumn2=0;
             for(int w = 0; w < width; w++) {
                 int sum = grayMatrixImage[w][h];
-                matrixIntegralImageGray[h][w] = (h > 0 ? matrixIntegralImageGray[h-1][w] : 0) + sumOfColumn + sum;
-                squaredMatrixIntegralImageGray[h][w] = (h>0?squaredMatrixIntegralImageGray[h-1][w]:0) + sumOfColumn2 + sum*sum;
+                matrixIntegralImageGray[w][h] = (h > 0 ? matrixIntegralImageGray[w-1][h] : 0) + sumOfColumn + sum;
+                squaredMatrixIntegralImageGray[w][h] = (h > 0 ? squaredMatrixIntegralImageGray[w-1][h] : 0) + sumOfColumn2 + sum*sum;
                 sumOfColumn = sumOfColumn + sum;
                 sumOfColumn2 = sumOfColumn2 + sum*sum;
             }
