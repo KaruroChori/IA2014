@@ -1,14 +1,12 @@
 IN PROGRESS:
 
-ENRICO, 15:20 25-10-2014,  aggiunto file test.java [DA MANTERE AGGIORNATO CON L'INSERIMENTO DI PIÙ FEATURE]
-ENRICO, 19-13 25-10-2014,  GrayScaleImageEqualization.java si tratta di eliminare gli effetti della luce sull'immagine,
-                           utilizzerò una particolare metodologia trovata sul web, vi tengo aggiornati
-
+ENRICO, 17:42 26-10-2014,  aggiunto file test.java [DA MANTERE AGGIORNATO CON L'INSERIMENTO DI PIÙ FEATURE]
+ENRICO, 17:42 26-10-2014,  NoiseReduction.java  FUNZIONA MA NON COME VORREI IN FASE DI REALIZZAZIONE UN ALTERNATIVA
+                           CON AIUTO DI GLORIA
 
 TESTING:
 
-ENRICO, 15:20 25-10-2014,  NoiseReduction.java  COMPLETATO [CONTROLLARE MA PER ME FUNZIONA BENONE]
-
+ENRICO, 19-13 25-10-2014,  GrayScaleImageEqualization.java COMPLETATO [FATE TESTING]
 
 CONCLUSI:
 
