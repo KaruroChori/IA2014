@@ -15,10 +15,13 @@ public class test {
             ImageToMatrix tmp = new ImageToMatrix(img);
             GrayImage newimg = new GrayImage(tmp.getMatrix());
             GrayScaleImageEqualization equalized = new GrayScaleImageEqualization(newimg.getGrayMatrixImage());
-            NoiseReduction nonoise = new NoiseReduction(equalized.getMatrixEqualized());
+            MedianFilter filtered = new MedianFilter(equalized.getMatrixEqualized());
+            int dimension = 5;            
+            NoiseReduction nonoise = new NoiseReduction(filtered.getFilteredMatrix(dimension));
             nonoise.getNoNoiseMatrixGrayImage();
             ImageIO.write(newimg.getGrayImage(),"JPG",new File("gray.jpg"));
             ImageIO.write(equalized.getImageEqualized(),"JPG",new File("equalized.jpg"));
+            ImageIO.write(filtered.getFilteredImage(),"JPG",new File("filtered"+dimension+".jpg"));
             ImageIO.write(nonoise.getNoNoiseGrayImage(),"JPG",new File("norumorgray.jpg"));
             //ImageIO.write(nonoise.getNoNoiseColorImage(),"JPG",new File("norumorcolor.jpg"));
         }
