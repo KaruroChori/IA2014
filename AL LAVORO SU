@@ -6,6 +6,10 @@ ENRICO, 17:42 26-10-2014,  NoiseReduction.java  FUNZIONA MA NON COME VORREI IN F
 
 TESTING:
 
+ENRICO - GLORIA 21:27 27-10-2014  MedianFilter.java  COMPLETATO [DA TESTARE CON IMMAGINI PIÙ PICCOLE. 
+                                                                 A 1600*1200 PIXEL E CON UNA MATRICE 9*9
+                                                                 IMPIEGA PIÙ DI UN SECONDO E MEZZO,
+                                                                 TROPPO PER ESIGENZE REALTIME]
 ENRICO, 19-13 25-10-2014,  GrayScaleImageEqualization.java COMPLETATO [FATE TESTING]
 
 CONCLUSI:
