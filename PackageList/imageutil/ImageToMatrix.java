@@ -13,6 +13,7 @@ public class ImageToMatrix {
         width = img.getWidth();
         height = img.getHeight();
         matrixImage = new int[width][height];
+        image=img;
     }
     
     public int[][] getMatrix() {
