@@ -88,7 +88,7 @@ public class MedianFilter {
         int edgex = (int)Math.floor(dimension/2);
         int edgey = (int)Math.floor(dimension/2);
         long start = System.nanoTime();
-	    int r=0;
+	int r=0;
 
         for (int x = edgex; x < width - edgex; x++) {
             for (int y = edgey; y < height - edgey; y++) {
@@ -109,7 +109,7 @@ public class MedianFilter {
 				        window2[i+r%dimension]= matrixGrayImage[x+fx-edgex][y+dimension-1-edgey];
 				        i+=dimension;      
 			        } 
-                    System.arraycopy(window2,0,window,0,dimension*dimension);  
+                		System.arraycopy(window2,0,window,0,dimension*dimension);  
 			        r++;   
 		        }
 		        filteredMatrixGrayImage[x][y] = quick_select(window,dimension*dimension/2);
