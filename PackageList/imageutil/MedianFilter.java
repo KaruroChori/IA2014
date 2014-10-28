@@ -17,25 +17,101 @@ public class MedianFilter {
         height = img[0].length;
         filteredMatrixGrayImage = new int[width][height];
     }
+
+
+    /*
+     *  This Quickselect routine is based on the algorithm described in
+     *  "Numerical recipes in C", Second Edition,
+     *  Cambridge University Press, 1992, Section 8.5, ISBN 0-521-43108-5
+     *  This code by Nicolas Devillard - 1998. Public domain.
+     *  Java version by karurochari
+     */
+
+    public int quick_select(int arr[], int n){
+        int low, high ;
+        int median;
+        int middle, ll, hh;
+
+        low = 0 ; high = n-1 ; median = (low + high) / 2;
+        for (;;) {
+            if (high <= low) /* One element only */
+                return arr[median] ;
+
+            if (high == low + 1) {  /* Two elements only */
+                if (arr[low] > arr[high]){int t=arr[low];arr[low]=arr[high];arr[high]=t;}
+                return arr[median] ;
+            }
+
+        /* Find median of low, middle and high items; swap into position low */
+        middle = (low + high) / 2;
+        if (arr[middle] > arr[high])    {int t=arr[middle];arr[middle]=arr[high];arr[high]=t;}
+        if (arr[low] > arr[high])       {int t=arr[low];arr[low]=arr[high];arr[high]=t;}
+        if (arr[middle] > arr[low])     {int t=arr[middle];arr[middle]=arr[low];arr[low]=t;}
+
+        /* Swap low item (now in position middle) into position (low+1) */
+        {int t=arr[middle];arr[middle]=arr[low+1];arr[low+1]=t;}
+
+        /* Nibble from each end towards middle, swapping items when stuck */
+        ll = low + 1;
+        hh = high;
+        for (;;) {
+            do ll++; while (arr[low] > arr[ll]) ;
+            do hh--; while (arr[hh]  > arr[low]) ;
+
+            if (hh < ll)
+            break;
+
+	    {int t=arr[ll];arr[ll]=arr[hh];arr[hh]=t;}
+        }
+
+        /* Swap middle item (in position low) back into correct position */
+        {int t=arr[low];arr[low]=arr[hh];arr[hh]=t;}
+
+        /* Re-set active partition */
+        if (hh <= median)
+            low = ll;
+            if (hh >= median)
+            high = hh - 1;
+        }
+    }
     
     //FA UN BUON LAVORO CON UNA FILTRO DI DIMENSIONI 9x9 MA VA SOPRA IL SECONDO E MEZZO,
     //PERCHÈ BISOGNA MANTENERE ORDINATO UN ARRAY
+
+    //EDIT Karurochori: No. Basta il calcolo della mediana. Esistono algoritmi O(n) o randomizzati O(log(n)) per farlo. 
+    //Ho usato un altro piccolo trucco per evitare di dover leggere tutti i dati ogni volta. Ne parliamo venerdì. Funziona più veloce 
+    //e c'è ancora un buon margine di miglioramento.
     public int[][] getFilteredMatrix(int dimension) {
         int[] window = new int[dimension*dimension];
+
         int edgex = (int)Math.floor(dimension/2);
         int edgey = (int)Math.floor(dimension/2);
         //long start = System.nanoTime();
+	    int r=0;
+
         for (int x = edgex; x < width - edgex; x++) {
             for (int y = edgey; y < height - edgey; y++) {
-                int i = 0;
-                for (int fx = 0; fx < dimension; fx++) {
-                    for (int fy = 0; fy < dimension; fy++) {
-                        window[i] = matrixGrayImage[x+fx-edgex][y+fy-edgey];
-                        i = i+1;
-                    }                
-                }                
-                Arrays.sort(window);
-                filteredMatrixGrayImage[x][y] = window[dimension*dimension/2];
+		        if(y==edgey){
+			        int i=0;
+			        for (int fx = 0; fx < dimension; fx++){
+		                	for (int fy = 0; fy < dimension; fy++){
+					        window[i]= matrixGrayImage[x+fx-edgex][y+fy-edgey];
+					        i++;
+				        }        
+			        }
+			        r=0;
+		        }
+
+		        else{
+			        int i=0;
+			        for (int fx = 0; fx < dimension; fx++){
+				        window[i+r%dimension]= matrixGrayImage[x+fx-edgex][y+dimension-1-edgey];
+				        i+=dimension;      
+			        } 
+			        r++;       
+		        }
+
+		        filteredMatrixGrayImage[x][y] = quick_select(window,dimension*dimension/2);
             }         
         }
         //long end = System.nanoTime();
