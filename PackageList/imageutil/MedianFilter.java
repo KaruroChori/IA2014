@@ -83,10 +83,11 @@ public class MedianFilter {
     //e c'è ancora un buon margine di miglioramento.
     public int[][] getFilteredMatrix(int dimension) {
         int[] window = new int[dimension*dimension];
+        int[] window2 = new int[dimension*dimension];
 
         int edgex = (int)Math.floor(dimension/2);
         int edgey = (int)Math.floor(dimension/2);
-        //long start = System.nanoTime();
+        long start = System.nanoTime();
 	    int r=0;
 
         for (int x = edgex; x < width - edgex; x++) {
@@ -95,7 +96,7 @@ public class MedianFilter {
 			        int i=0;
 			        for (int fx = 0; fx < dimension; fx++){
 		                	for (int fy = 0; fy < dimension; fy++){
-					        window[i]= matrixGrayImage[x+fx-edgex][y+fy-edgey];
+					        window2[i] = window[i] = matrixGrayImage[x+fx-edgex][y+fy-edgey];
 					        i++;
 				        }        
 			        }
@@ -105,17 +106,17 @@ public class MedianFilter {
 		        else{
 			        int i=0;
 			        for (int fx = 0; fx < dimension; fx++){
-				        window[i+r%dimension]= matrixGrayImage[x+fx-edgex][y+dimension-1-edgey];
+				        window2[i+r%dimension]= matrixGrayImage[x+fx-edgex][y+dimension-1-edgey];
 				        i+=dimension;      
 			        } 
-			        r++;       
+                    System.arraycopy(window2,0,window,0,dimension*dimension);  
+			        r++;   
 		        }
-
 		        filteredMatrixGrayImage[x][y] = quick_select(window,dimension*dimension/2);
             }         
         }
-        //long end = System.nanoTime();
-        //System.out.println((end-start)/1000000000.0);
+        long end = System.nanoTime();
+        System.out.println((end-start)/1000000000.0);
         return filteredMatrixGrayImage;
     }
     
