@@ -112,7 +112,7 @@ public class MedianFilter {
                 		System.arraycopy(window2,0,window,0,dimension*dimension);  
 			        r++;   
 		        }
-		        filteredMatrixGrayImage[x][y] = quick_select(window,dimension*dimension/2);
+		        filteredMatrixGrayImage[x][y] = quick_select(window,dimension*dimension);
             }         
         }
         long end = System.nanoTime();
