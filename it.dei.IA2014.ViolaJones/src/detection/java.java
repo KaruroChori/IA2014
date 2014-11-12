@@ -1,4 +1,4 @@
-package Detection;
+package detection;
 
 public class java {
     
