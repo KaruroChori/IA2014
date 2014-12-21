@@ -69,6 +69,11 @@ public class NormalizeImage{
 		return;
 	}
     
+    public int[][] getNormalizeMatrixIMage() {
+        return temp;
+    }
+        
+        
     public BufferedImage getFilteredImage() {
         BufferedImage filteredImage = new BufferedImage(width,height,TYPE_INT_RGB);
         for (int h = 0; h < height; h++) {            

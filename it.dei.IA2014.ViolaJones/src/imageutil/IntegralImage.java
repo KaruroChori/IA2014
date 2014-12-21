@@ -18,15 +18,15 @@ public class IntegralImage {
     //Sicuri dell'ordinamento h,w ? ENRICO FIXED
 
     public void getMatrixIntegralImage() {
-        for(int h =0; h < height; h++) {
+        for(int w = 0; w < width; w++) {
             int sumOfColumn=0;
             int sumOfColumn2=0;
-            for(int w = 0; w < width; w++) {
+            for(int h =0; h < height; h++) {
                 int sum = grayMatrixImage[w][h];
-                matrixIntegralImageGray[w][h] = (h > 0 ? matrixIntegralImageGray[w-1][h] : 0) + sumOfColumn + sum;
-                squaredMatrixIntegralImageGray[w][h] = (h > 0 ? squaredMatrixIntegralImageGray[w-1][h] : 0) + sumOfColumn2 + sum*sum;
-                sumOfColumn = sumOfColumn + sum;
-                sumOfColumn2 = sumOfColumn2 + sum*sum;
+                matrixIntegralImageGray[w][h] = (w > 0 ? matrixIntegralImageGray[w-1][h] : 0) + sumOfColumn + sum;
+                squaredMatrixIntegralImageGray[w][h] = (w > 0 ? squaredMatrixIntegralImageGray[w-1][h] : 0) + sumOfColumn2 + sum*sum;
+                sumOfColumn += sum;
+                sumOfColumn2 += sum*sum;
             }
         }
     }

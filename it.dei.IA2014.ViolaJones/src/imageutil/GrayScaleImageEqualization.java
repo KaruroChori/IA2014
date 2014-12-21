@@ -22,8 +22,8 @@ public class GrayScaleImageEqualization {
     **/
     public int[][] getMatrixEqualized() {
         long[] pixel = new long[256];
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
                 pixel[matrixGrayImageWithNoise[w][h]]++;
             }
         }
@@ -43,8 +43,8 @@ public class GrayScaleImageEqualization {
             double tmp2 = tmp/tmp1;
             pixel[i] = Math.round(tmp2*(255.0));
         }
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
                 equalizedMatrixGrayImageWithNoise[w][h] = (int)pixel[matrixGrayImageWithNoise[w][h]];
             }
         }
@@ -54,8 +54,8 @@ public class GrayScaleImageEqualization {
     
     public BufferedImage getImageEqualized() {
         BufferedImage imageEqualized = new BufferedImage(width,height,TYPE_INT_RGB);
-        for (int h = 0; h < height; h++) {            
-            for (int w = 0; w < width; w++) {
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
                 int sum = equalizedMatrixGrayImageWithNoise[w][h];
                 int color = ((255 & 0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8)  | ((sum & 0xFF) << 0);
                 imageEqualized.setRGB(w,h,color);

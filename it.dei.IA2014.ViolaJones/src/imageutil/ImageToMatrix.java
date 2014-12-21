@@ -17,8 +17,8 @@ public class ImageToMatrix {
     }
     
     public int[][] getMatrix() {
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
                 int color = image.getRGB(w, h);
                 matrixImage[w][h] = color;
             }

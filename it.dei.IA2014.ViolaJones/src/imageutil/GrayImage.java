@@ -17,8 +17,8 @@ public class GrayImage {
     }
     
     public int[][] getGrayMatrixImage() {
-        for (int h = 0; h < height; h++) {
-            for (int w = 0; w < width; w++) {
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
                 int color = matrixGrayImage[w][h];
                 int red = (color >> 16) & 0xFF;
                 int green = (color >>8) & 0xFF;
@@ -32,8 +32,8 @@ public class GrayImage {
     
     public BufferedImage getGrayImage() {
         BufferedImage grayImage = new BufferedImage(width,height,TYPE_INT_RGB);        
-        for (int h = 0; h < height; h++) {            
-            for (int w = 0; w < width; w++) {
+        for (int w = 0; w < width; w++) {            
+            for (int h = 0; h < height; h++) {
                 int sum = matrixGrayImage[w][h];
                 //255=0xff quindi è tauologico basta 0xFF<<24 ENRICO ??
                 int grayColor = ((255 & 0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8)  | ((sum & 0xFF) << 0);
