@@ -7,7 +7,7 @@ public class Tree {
 
     public final static int SINISTRA = 0;
     public final static int DESTRA = 1;
-    private List<Feature> features;
+    private ArrayList<Feature> features;
 
     public Tree() {
         features = new ArrayList<Feature>();

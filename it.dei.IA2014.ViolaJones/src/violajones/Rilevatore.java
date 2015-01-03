@@ -26,6 +26,10 @@ public class Rilevatore {
 
     private Point size;
     private LinkedList<Fasi> stages;
+    private ArrayList<Rectangle> allPossibleRectangle;
+    private ArrayList<Integer> sizeChangePosition;
+    private ArrayList<Rectangle> rectangleList;
+    private ArrayList<Rectangle> rectangleUnitedList;
 
     /*
      * Il costruttore principale prende in input una stringa con il percorso del file
@@ -55,6 +59,14 @@ public class Rilevatore {
          * è considerato come rappresentante dell'oggetto
          */
         stages = new LinkedList<Fasi>();
+        
+        
+        
+        
+        allPossibleRectangle = new ArrayList<Rectangle>();
+        sizeChangePosition = new ArrayList<Integer>();
+        rectangleList = new ArrayList<Rectangle>();
+        rectangleUnitedList = new ArrayList<Rectangle>();
         /*
          * 
          */
@@ -127,9 +139,8 @@ public class Rilevatore {
      * @param incrementa
      * @param vicini
     */
-    public List<Rectangle> trovaVolti(int[][] grayIntImg, int[][] sqrGrayIntImg,
+    public ArrayList<Rectangle> trovaVolti(int[][] grayIntImg, int[][] sqrGrayIntImg,
             float scala_base, float scala_inc, float incrementa, int vicini) {
-        List<Rectangle> lista_rettangoli = new ArrayList<Rectangle>();
         int width = grayIntImg.length;
         int height = grayIntImg[0].length;
         /*
@@ -142,9 +153,11 @@ public class Rilevatore {
         for (float scala = scala_base; scala < scala_max; scala *= scala_inc) {
             int passi = (int) (scala * size.x * incrementa);
             int dim = (int) (scala * this.size.x);
+            sizeChangePosition.add(allPossibleRectangle.size()); //next position chaged size
             for (int w = 0; w < width - dim; w += passi) {
                 for (int h = 0; h < height - dim; h += passi) {
                     boolean passa = true;
+                    allPossibleRectangle.add(new Rectangle(w, h, dim, dim));
                     for (Fasi stg : stages) {
                         if (!stg.pass(grayIntImg, sqrGrayIntImg, w, h, scala)) {
                             passa = false;
@@ -153,22 +166,21 @@ public class Rilevatore {
                         }
                     }
                     if (passa) {
-                        lista_rettangoli.add(new Rectangle(w, h, dim, dim));
+                        rectangleList.add(new Rectangle(w, h, dim, dim));
                         //System.out.println("pass"); ///////////////////////////////////////////////////////////////////
                     }
                     //System.out.println(w + " " + h); ///////////////////////////////////////////////////////////
                 }                
             }
         }
-        System.out.println("Rettangoli: " + lista_rettangoli.size()); ///////////////////////////////////////////////////////////////////////////////7
-        //unifico(lista_rettangoli, vicini);
-        return lista_rettangoli;
+        System.out.println("Rettangoli: " + rectangleList.size()); ///////////////////////////////////////////////////////////////////////////////7
+        return unifico(rectangleList, vicini);
     }
 
     //public List<Rectangle> unificati;    
     
-    public List<Rectangle> unifico(List<Rectangle> lista_rettangoli, int vicini) {
-        List<Rectangle> rettangoli_uniti = new LinkedList<Rectangle>();
+    public ArrayList<Rectangle> unifico(List<Rectangle> lista_rettangoli, int vicini) {
+        
         int[] rettangoli = new int[lista_rettangoli.size()];
         int numeroDiClassi = 0;
         for (int i = 0; i < lista_rettangoli.size(); i++) {
@@ -206,12 +218,12 @@ public class Rilevatore {
                 r.y = (ret[i].y * 2 + n) / (2 * n);
                 r.width = (ret[i].width * 2 + n) / (2 * n);
                 r.height = (ret[i].height * 2 + n) / (2 * n);
-                rettangoli_uniti.add(r);
+                rectangleUnitedList.add(r);
             }
         }
-        System.out.println("Rettangoli uniti: " + rettangoli_uniti.size());
-        //unificati = rettangoli_uniti;
-        return rettangoli_uniti;
+        System.out.println("Rettangoli uniti: " + rectangleUnitedList.size());
+        //unificati = rectangleUnitedList;
+        return rectangleUnitedList;
     }
 
     public boolean equals(Rectangle r1, Rectangle r2) {
@@ -232,5 +244,18 @@ public class Rilevatore {
         }
         return false;
     }
-
+    
+    
+    public ArrayList<Rectangle> getAllPossibleRect() {
+        return allPossibleRectangle;
+    }    
+    public ArrayList<Integer> getsizeChangePosition() {
+        return sizeChangePosition;
+    }
+    public ArrayList<Rectangle> getlista_rettangoli() {
+        return rectangleList;
+    }
+    public ArrayList<Rectangle> getrettangoli_uniti() {
+        return rectangleUnitedList;
+    }
 }

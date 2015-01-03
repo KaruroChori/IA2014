@@ -11,12 +11,12 @@ import java.util.List;
  */
 public class Fasi {
 
-    private List<Tree> trees;
+    private ArrayList<Tree> trees;
     private float soglia;
 
     public Fasi(float limite) {
         soglia = limite;
-        trees = new LinkedList< Tree>();
+        trees = new ArrayList< Tree>();
     }
 
     public void addTree(Tree t) {
