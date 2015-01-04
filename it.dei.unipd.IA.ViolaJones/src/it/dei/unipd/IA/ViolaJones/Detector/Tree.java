@@ -6,20 +6,20 @@ package it.dei.unipd.IA.ViolaJones.Detector;
 import java.util.ArrayList;
 
 /**
- * Un semplice albero binario, necessario per organizzare la ricerca e i dati 
- * in nostro possesso.
+ * Un semplice albero binario, necessario per organizzare la ricerca e i dati in
+ * nostro possesso.
  */
 public class Tree {
 
     public final static int LEFT = 0;
     public final static int RIGHT = 1;
-    private ArrayList<Feature> features;
+    private ArrayList<Feature> featuresList;
 
     /**
      * Costruisce una lista di feature.
      */
     public Tree() {
-        features = new ArrayList<Feature>();
+        featuresList = new ArrayList<Feature>();
     }
 
     /**
@@ -30,26 +30,27 @@ public class Tree {
      * @param feature
      */
     public void addFeature(Feature feature) {
-        features.add(feature);
+        featuresList.add(feature);
     }
 
     /**
-     * 
-     * 
+     * Questo metodo ritorna il valore del nodo destro o sinistro in base al
+     * risultato del metodo chooseRightOrLeftNode
+     *
      * @param grayIntegralImage
      * @param squareGrayIntegralImage
-     * @param width
-     * @param height
+     * @param x
+     * @param y
      * @param scale
      * @return currentNodeValue
      */
-    public float getValue(int[][] grayIntegralImage, int[][] squareGrayIntegralImage, int width, int height, float scale) {
+    public float getValue(int[][] grayIntegralImage, int[][] squareGrayIntegralImage, int x, int y, float scale) {
         /*
          * Parto dalla radice
          */
-        Feature currentNode = features.get(0);
+        Feature currentNode = featuresList.get(0);
         while (true) {
-            int position = currentNode.chooseRightOrLeftNode(grayIntegralImage, squareGrayIntegralImage, width, height, scale);
+            int position = currentNode.chooseRightOrLeftNode(grayIntegralImage, squareGrayIntegralImage, x, y, scale);
             if (position == LEFT) {
                 if (currentNode.leftValuePresent) {
                     return currentNode.leftValue;
@@ -57,7 +58,7 @@ public class Tree {
                     /*
                      * Mi devo spostare nel figlio sinistro
                      */
-                    currentNode = features.get(currentNode.leftNode);
+                    currentNode = featuresList.get(currentNode.leftNode);
                 }
             } else {
                 if (currentNode.rightValuePresent) {
@@ -66,9 +67,18 @@ public class Tree {
                     /*
                      * Se non sono sul nodo destro, mi sposto su di esso
                      */
-                    currentNode = features.get(currentNode.rightNode);
+                    currentNode = featuresList.get(currentNode.rightNode);
                 }
             }
         }
+    }
+
+    /**
+     * Ritorna un'array contente tutte le feature per un determinato albero.
+     *
+     * @return featuresList
+     */
+    public ArrayList<Feature> getFeaturesList() {
+        return featuresList;
     }
 }

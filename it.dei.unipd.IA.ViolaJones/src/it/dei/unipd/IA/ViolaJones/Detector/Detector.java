@@ -31,7 +31,6 @@ public class Detector {
     private ArrayList<Integer> sizeChangePosition;
     private ArrayList<Rectangle> rectanglesList;
     private ArrayList<Rectangle> rectanglesUnitedList;
-    private ArrayList<Feature> featureList;
 
     /*
      * Il costruttore principale prende in input una stringa con il percorso del file
@@ -52,7 +51,6 @@ public class Detector {
         sizeChangePosition = new ArrayList<Integer>();
         rectanglesList = new ArrayList<Rectangle>();
         rectanglesUnitedList = new ArrayList<Rectangle>();
-        featureList = new ArrayList<Feature>();
         buildClassifier(haarcascade_xml);
     }
 
@@ -113,7 +111,6 @@ public class Detector {
                         System.out.println(s);
                     }
                     t.addFeature(f);
-                    featureList.add(f);
                 }
                 st.addTree(t);
             }
@@ -295,7 +292,8 @@ public class Detector {
         return rectanglesUnitedList;
     }
     
-    public ArrayList<Feature> getFeature() {
-        return featureList;
+    public ArrayList<Stage> getStages() {
+        return stages;
     }
+
 }

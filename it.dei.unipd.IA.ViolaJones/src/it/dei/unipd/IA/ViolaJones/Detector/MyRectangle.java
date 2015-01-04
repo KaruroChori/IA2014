@@ -2,11 +2,13 @@ package it.dei.unipd.IA.ViolaJones.Detector;
 
 import java.awt.Rectangle;
 
+/**
+ * Un semplice rettangolo, esattamente come è definito in java.awt.Rectangle,
+ * con la sola differenza che ha meno metodi e possiede un peso specifico,
+ * necessario per il nostro algoritmo.
+ */
 public class MyRectangle {
 
-    /*
-     * Coordinate spigoli rettangolo.
-     */
     protected int x, y, width, height;
     protected float weight;
 
@@ -19,13 +21,13 @@ public class MyRectangle {
     }
 
     /**
-     * Crea un rettangolo x partire da una stringa.
+     * Crea un rettangolo a partire da una stringa.
      *
-     * @param text
+     * @param rectangleStringDefinition
      * @return
      */
-    public static MyRectangle convert(String text) {
-        String[] parameters = text.split(" ");
+    public static MyRectangle convert(String rectangleStringDefinition) {
+        String[] parameters = rectangleStringDefinition.split(" ");
         int x = Integer.parseInt(parameters[0]);
         int y = Integer.parseInt(parameters[1]);
         int width = Integer.parseInt(parameters[2]);
@@ -33,8 +35,14 @@ public class MyRectangle {
         Float weight = Float.parseFloat(parameters[4]);
         return new MyRectangle(x, y, width, height, weight);
     }
-    
+
+    /**
+     * Questo metodo converte un oggetto MyRectangle in un classico rettangolo
+     * fornito dalla classe Rectangle dell libreria awt di java.
+     *
+     * @return Rectangle(x,y,width,height)
+     */
     public Rectangle convert() {
-        return new Rectangle(x,y,width,height);
+        return new Rectangle(x, y, width, height);
     }
 }

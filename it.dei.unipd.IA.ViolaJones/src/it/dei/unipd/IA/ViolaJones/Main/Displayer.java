@@ -14,6 +14,19 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import it.dei.unipd.IA.ViolaJones.Detector.Detector;
 import it.dei.unipd.IA.ViolaJones.Detector.Feature;
+import it.dei.unipd.IA.ViolaJones.Detector.Stage;
+import it.dei.unipd.IA.ViolaJones.Detector.Tree;
+
+/**
+ * Questa classe ha puro scopo dimostrativo e didattico.Essa infatti permette di 
+ * vedere il risultato dell'algoritmo su una data immagine.Oltre a questo mostra
+ * anche tutte le feature valutate dall'algoritmo senza badare al reale ordine cronologico 
+ * in cui sono state valutate, ma più che altro vorrebbe sottolineare come la maggior densità 
+ * di feature valutate si ha su quelle zone che poi effettivamente contengono un 
+ * volto.Tuttavia questa classe non è sufficiente a scopo didattico e per questo va accompagnata 
+ * con una seconda classe che permette di visualizzare il procedimento cronoligico (e quindi non per densità)
+ * delle varie fasi dell'agoritmo.
+ */
 
 public class Displayer extends JFrame {
 
@@ -23,12 +36,14 @@ public class Displayer extends JFrame {
     private ArrayList<Rectangle> rectangleList;
     private ArrayList<Rectangle> rectangleUnitedList;
     private ArrayList<Feature> featureList;
+    private ArrayList<Tree> trees;
+    private ArrayList<Stage> stages;
     private BufferedImage image;
     private Rectangle rect;
     private Feature feature;
-    private Rectangle feature1;
-    private Rectangle feature2;
-    private Rectangle feature3;
+    private Rectangle featurePart1;
+    private Rectangle featurePart2;
+    private Rectangle featurePart3;
 
     public Displayer(File img, String XMLFile) {
         image = null;
@@ -61,8 +76,7 @@ public class Displayer extends JFrame {
         sizeChangePosition = detector.getsizeChangePosition();
         rectangleList = detector.getRectangleList();
         rectangleUnitedList = detector.getRectangleUnitedList();
-        featureList = detector.getFeature();
-        System.out.println("Size" + featureList.size());
+        stages = detector.getStages();
         setContentPane(d);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(image.getWidth(), image.getHeight());
@@ -71,7 +85,7 @@ public class Displayer extends JFrame {
     }
 
     public static void main(String[] args) throws IOException {
-        Displayer dd = new Displayer(new File("img.jpg"), "haarcascade_frontalface_alt2.xml");
+        Displayer dd = new Displayer(new File("img2.jpg"), "haarcascade_frontalface_alt2.xml");
         dd.render();
     }
 
@@ -84,38 +98,38 @@ public class Displayer extends JFrame {
     }
 
     public void render() {
-
-        for (int i = 0; i < allPossibleRectangle.size(); i++) {
-            rect = allPossibleRectangle.get(i);
-            try {
-                if (i == sizeChangePosition.get(0)) {
-                    sizeChangePosition.remove(0);
-                    Thread.sleep(5000);
-                    System.out.println("Cambio delle dimensioni della finestra di ricerca.");
-                } else {
-                    Thread.sleep(1);
-                }
-                for (int j = 0; j < featureList.size(); j++) {
-                    feature = featureList.get(j);
-                    feature1 = feature.getFeature()[0].convert();
-                    feature2 = feature.getFeature()[1].convert();
-                    if (feature.getFeature()[2] != null) {
-                        feature3 = feature.getFeature()[2].convert();
+        for (int s = 0; s < stages.size(); s++) {
+            Stage stage = detector.getStages().get(s);
+            trees = stage.getTreesList();
+            for (int t = 0; t < trees.size(); t++) {
+                featureList = trees.get(t).getFeaturesList();
+                for (int f = 0; f < featureList.size(); f++) {
+                    feature = featureList.get(f);
+                    if (feature.getScaledFeature()[0] != null) {
+                        featurePart1 = feature.getScaledFeature()[0].convert();
+                    } else {
+                        featurePart1 = null;
                     }
-                    else {
-                        feature3 = null;
+                    if (feature.getScaledFeature()[1] != null) {
+                        featurePart2 = feature.getScaledFeature()[1].convert();
+                    } else {
+                        featurePart2 = null;
+                    }
+                    if (feature.getScaledFeature()[2] != null) {
+                        featurePart3 = feature.getScaledFeature()[2].convert();
+                    } else {
+                        featurePart3 = null;
                     }
                     getContentPane().repaint();
                     try {
-                        Thread.sleep(0);
+                        Thread.sleep(100);
                     } catch (InterruptedException ex) {
                         Thread.currentThread().interrupt();
                     }
                 }
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
             }
         }
+
     }
 
     class DrawPane extends JPanel {
@@ -138,43 +152,60 @@ public class Displayer extends JFrame {
             if (image == null) {
                 return;
             }
-            Dimension dim = getSize();
-            g1.clearRect(0, 0, dim.width, dim.height);
-            double scale_x = dim.width * 1.f / img_width;
-            double scale_y = dim.height * 1.f / img_height;
+            Dimension dimension = getSize();
+            g1.clearRect(0, 0, dimension.width, dimension.height);
+            double scale_x = dimension.width * 1.f / img_width;
+            double scale_y = dimension.height * 1.f / img_height;
             double scale = Math.min(scale_x, scale_y);
-            int x_img = (dim.width - (int) (img_width * scale)) / 2;
-            int y_img = (dim.height - (int) (img_height * scale)) / 2;
-            g1.drawImage(image, x_img, y_img, (int) (img_width * scale), (int) (img_height * scale), null);
-            int w = (int) (rect.width * scale);
-            int h = (int) (rect.height * scale);
-            int x = (int) (rect.x * scale) + x_img;
-            int y = (int) (rect.y * scale) + y_img;
-            g1.drawRect(x, y, w, h);
-            if (feature1 != null) {
-                int w1 = (int) (feature1.width);
-                int h1 = (int) (feature1.height);
-                int x1 = (int) (feature1.x) + x;
-                int y1 = (int) (feature1.y) + y;
+            int imageX = (dimension.width - (int) (img_width * scale)) / 2;
+            int imageY = (dimension.height - (int) (img_height * scale)) / 2;
+            g1.drawImage(image, imageX, imageY, (int) (img_width * scale), (int) (img_height * scale), null);
+            /*int w = (int) (rect.width * scale);
+             int h = (int) (rect.height * scale);
+             int x = (int) (rect.x * scale) + imageX;
+             int y = (int) (rect.y * scale) + imageY;
+             g1.drawRect(x, y, w, h);*/
+            for (int i = 0; i < rectangleList.size(); i++) {
+                int wf = (int) (rectangleList.get(i).width * scale);
+                int hf = (int) (rectangleList.get(i).height * scale);
+                int xf = (int) (rectangleList.get(i).x * scale) + imageX;
+                int yf = (int) (rectangleList.get(i).y * scale) + imageY;
+                g1.setColor(Color.blue);
+                g1.drawRect(xf, yf, wf, hf);
+            }
+            for (int i = 0; i < rectangleUnitedList.size(); i++) {
+                int wf = (int) (rectangleUnitedList.get(i).width * scale);
+                int hf = (int) (rectangleUnitedList.get(i).height * scale);
+                int xf = (int) (rectangleUnitedList.get(i).x * scale) + imageX;
+                int yf = (int) (rectangleUnitedList.get(i).y * scale) + imageY;
+                g1.setColor(Color.orange);
+                g1.drawRect(xf, yf, wf, hf);
+            }
+            if (featurePart1 != null) {
+                int w1 = (int) (featurePart1.width);
+                int h1 = (int) (featurePart1.height);
+                int x1 = (int) (featurePart1.x);
+                int y1 = (int) (featurePart1.y);
                 g1.setColor(Color.white);
                 g1.fillRect(x1, y1, w1, h1);
             }
-            if (feature2 != null) {
-                int w2 = (int) (feature2.width);
-                int h2 = (int) (feature2.height);
-                int x2 = (int) (feature2.x)+ x;
-                int y2 = (int) (feature2.y)+ y;
+            if (featurePart2 != null) {
+                int w2 = (int) (featurePart2.width);
+                int h2 = (int) (featurePart2.height);
+                int x2 = (int) (featurePart2.x);
+                int y2 = (int) (featurePart2.y);
                 g1.setColor(Color.black);
                 g1.fillRect(x2, y2, w2, h2);
             }
-            if (feature3 != null) {
-                int w3 = (int) (feature3.width);
-                int h3 = (int) (feature3.height);
-                int x3 = (int) (feature3.x)+ x;
-                int y3 = (int) (feature3.y)+ y;
+            if (featurePart3 != null) {
+                int w3 = (int) (featurePart3.width);
+                int h3 = (int) (featurePart3.height);
+                int x3 = (int) (featurePart3.x);
+                int y3 = (int) (featurePart3.y);
                 g1.setColor(Color.black);
                 g1.fillRect(x3, y3, w3, h3);
             }
+
         }
 
     }

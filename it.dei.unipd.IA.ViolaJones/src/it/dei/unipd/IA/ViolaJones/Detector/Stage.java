@@ -37,29 +37,33 @@ public class Stage {
 
     /**
      * Calcola il valore che deve superare la soglia affinchè sia determinato
-     * che nel rettangolo esaminato (questo metodo viene chiamato dal detector
-     * al momento di determinare se nel rettangolo di ricerca c'è o meno una
-     * faccia.
+     * che nel rettangolo esaminato vi sia un volto (questo metodo viene
+     * chiamato dal detector al momento di determinare se nel rettangolo di
+     * ricerca c'è o meno una faccia).
      *
      * @param grayIntImg
      * @param sqrIntImg
-     * @param width
-     * @param height
+     * @param x
+     * @param y
      * @param scale
      * @return passed
      */
-    public boolean pass(int[][] grayIntImg, int[][] sqrIntImg, int width, int height, float scale) {
+    public boolean pass(int[][] grayIntImg, int[][] sqrIntImg, int x, int y, float scale) {
         float sum = 0;
         /*
          * Calcola la somma dei valori restituiti da ciascuno degli alberi.
          */
         for (Tree t : trees) {
-            sum += t.getValue(grayIntImg, sqrIntImg, width, height, scale);
+            sum += t.getValue(grayIntImg, sqrIntImg, x, y, scale);
         }
         /* 
-         * Se la somma supera la threshold allora fallisce.
+         * Se la somma supera la soglia allora fallisce.
          */
         boolean passed = sum > threshold;
         return passed;
+    }
+
+    public ArrayList<Tree> getTreesList() {
+        return trees;
     }
 }
