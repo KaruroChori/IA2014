@@ -1,8 +1,12 @@
-package it.dei.unipd.IA.ViolaJones.Detector;
+package it.dei.unipd.IA.ViolaJones.Didactic;
 
 /*
  * Import delle classi
  */
+import it.dei.unipd.IA.ViolaJones.Detector.Feature;
+import it.dei.unipd.IA.ViolaJones.Detector.MyRectangle;
+import it.dei.unipd.IA.ViolaJones.Detector.Stage;
+import it.dei.unipd.IA.ViolaJones.Detector.Tree;
 import it.dei.unipd.IA.ViolaJones.ImageUtil.GrayImage;
 import it.dei.unipd.IA.ViolaJones.ImageUtil.ImageToMatrix;
 import it.dei.unipd.IA.ViolaJones.ImageUtil.IntegralImage;
@@ -38,7 +42,7 @@ import org.jdom2.JDOMException;
 /**
  * Questa classe costruisce il classificatore ed esegue la ricerca dei volti
  */
-public class DetectorDidacticVersion extends JFrame {
+public class DidacticDetector extends JFrame {
 
     private Point searchRectangleInitialSize;
     private ArrayList<Stage> stages;
@@ -57,7 +61,7 @@ public class DetectorDidacticVersion extends JFrame {
      * Il costruttore principale prende in input una stringa con il percorso del file
      * xml contenente i dati che andranno a costrutire il classificatore.
      */
-    public DetectorDidacticVersion(File img, String percorso) {
+    public DidacticDetector(File img, String percorso) {
         Document haarcascade_xml = null;
         SAXBuilder sxb = new SAXBuilder();
         try {
@@ -91,7 +95,7 @@ public class DetectorDidacticVersion extends JFrame {
         try {
             ImageIO.write(nrm.getFilteredImage(), "JPG", new File("normalized.jpg"));
         } catch (IOException ex) {
-            Logger.getLogger(DetectorDidacticVersion.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DidacticDetector.class.getName()).log(Level.SEVERE, null, ex);
         }
         IntegralImage intImg = new IntegralImage(nrm.getNormalizeMatrixIMage());
         intImg.getMatrixIntegralImage();
@@ -243,18 +247,18 @@ public class DetectorDidacticVersion extends JFrame {
                                 featurePart2 = null;
                                 featurePart3 = null;
                                 Feature feature = featureList.get(f);
-                                if (feature.scaledRectangles[0] != null) {
-                                    featurePart1 = feature.scaledRectangles[0].convert();
+                                if (feature.getScaledFeature()[0] != null) {
+                                    featurePart1 = feature.getScaledFeature()[0].convert();
                                 } else {
                                     featurePart1 = null;
                                 }
-                                if (feature.scaledRectangles[1] != null) {
-                                    featurePart2 = feature.scaledRectangles[1].convert();
+                                if (feature.getScaledFeature()[1] != null) {
+                                    featurePart2 = feature.getScaledFeature()[1].convert();
                                 } else {
                                     featurePart2 = null;
                                 }
-                                if (feature.scaledRectangles[2] != null) {
-                                    featurePart3 = feature.scaledRectangles[2].convert();
+                                if (feature.getScaledFeature()[2] != null) {
+                                    featurePart3 = feature.getScaledFeature()[2].convert();
                                 } else {
                                     featurePart3 = null;
                                 }
@@ -399,7 +403,7 @@ public class DetectorDidacticVersion extends JFrame {
     }
 
     public static void main(String[] args) throws IOException {
-        DetectorDidacticVersion dd = new DetectorDidacticVersion(new File("img2.jpg"), "haarcascade_frontalface_alt2.xml");
+        DidacticDetector dd = new DidacticDetector(new File("img2.jpg"), "haarcascade_frontalface_alt2.xml");
     }
 
     private BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {
