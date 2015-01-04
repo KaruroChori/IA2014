@@ -1,5 +1,5 @@
 
-package id.dei.unipd.IA.ViolaJones.ImageUtil;
+package it.dei.unipd.IA.ViolaJones.ImageUtil;
 
 import java.awt.image.BufferedImage;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;

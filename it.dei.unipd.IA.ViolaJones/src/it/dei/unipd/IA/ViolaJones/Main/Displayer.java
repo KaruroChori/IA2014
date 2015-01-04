@@ -1,9 +1,9 @@
 package it.dei.unipd.IA.ViolaJones.Main;
 
-import id.dei.unipd.IA.ViolaJones.ImageUtil.GrayImage;
-import id.dei.unipd.IA.ViolaJones.ImageUtil.ImageToMatrix;
-import id.dei.unipd.IA.ViolaJones.ImageUtil.IntegralImage;
-import id.dei.unipd.IA.ViolaJones.ImageUtil.NormalizeImage;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.GrayImage;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.ImageToMatrix;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.IntegralImage;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.NormalizeImage;
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
