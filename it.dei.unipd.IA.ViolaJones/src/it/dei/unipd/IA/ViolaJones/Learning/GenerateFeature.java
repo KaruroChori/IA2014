@@ -1,0 +1,131 @@
+package it.dei.unipd.IA.ViolaJones.Learning;
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author enrico
+ */
+public class GenerateFeature {
+
+    final ArrayList<Feature> allPossibleFeature;
+    final static int FRAMESIZE = 24;
+    final static int FEATURES = 5;
+
+    public GenerateFeature() {
+        this.allPossibleFeature = new ArrayList<Feature>();
+        generateFeatureType1();
+        generateFeatureType2();
+        generateFeatureType3();
+        generateFeatureType4();
+        generateFeatureType5();
+    }
+
+    public void generateFeatureType1() {
+        for (int h = 0; h < FRAMESIZE; h++) {
+            for (int w = 0; w < FRAMESIZE; w++) {
+                for (int a = 1; a < FRAMESIZE - h +1; a = a+1) {
+                    for (int l = 2; l < FRAMESIZE - w +1; l = l+2) {
+                        MyRectangle[] rect = new MyRectangle[2];
+                        MyRectangle main = new MyRectangle(w, h, l, a, -1);   
+                        MyRectangle black = new MyRectangle(w+l/2, h, l/2, a, 2);
+                        rect[0] = main;
+                        rect[1] = black;
+                        Feature feature = new Feature(0,0,0,0,0,false,false, null);
+                        feature.setRectanglesList(rect);
+                        allPossibleFeature.add(feature);
+                    }
+                }
+            }
+        }
+        System.out.println(allPossibleFeature.size());
+    }
+    
+    public void generateFeatureType2() {
+        for (int h = 0; h < FRAMESIZE; h++) {
+            for (int w = 0; w < FRAMESIZE; w++) {
+                for (int a = 2; a < FRAMESIZE - h +1; a = a+2) {
+                    for (int l = 1; l < FRAMESIZE - w +1; l = l+1) {
+                        MyRectangle[] rect = new MyRectangle[2];
+                        MyRectangle main = new MyRectangle(w, h, l, a, -1);   
+                        MyRectangle black = new MyRectangle(w, h+a/2, l, a/2, 2);
+                        rect[0] = main;
+                        rect[1] = black;
+                        Feature feature = new Feature(0,0,0,0,0,false,false, null);
+                        feature.setRectanglesList(rect);
+                        allPossibleFeature.add(feature);
+                    }
+                }
+            }
+        }   
+        System.out.println(allPossibleFeature.size());
+    }
+    
+    public void generateFeatureType3() {
+        for (int h = 0; h < FRAMESIZE; h++) {
+            for (int w = 0; w < FRAMESIZE; w++) {
+                for (int a = 1; a < FRAMESIZE - h +1; a = a+1) {
+                    for (int l = 3; l < FRAMESIZE - w +1; l = l+3) {
+                        MyRectangle[] rect = new MyRectangle[2];
+                        MyRectangle main = new MyRectangle(w, h, l, a, -1);   
+                        MyRectangle black = new MyRectangle(w+l/3, h, l/3, a, 3);
+                        rect[0] = main;
+                        rect[1] = black;
+                        Feature feature = new Feature(0,0,0,0,0,false,false, null);
+                        feature.setRectanglesList(rect);
+                        allPossibleFeature.add(feature);
+                    }
+                }
+            }
+        }   
+        System.out.println(allPossibleFeature.size());
+    }
+    
+    public void generateFeatureType4() {
+        for (int h = 0; h < FRAMESIZE; h++) {
+            for (int w = 0; w < FRAMESIZE; w++) {
+                for (int a = 3; a < FRAMESIZE - h +1; a = a+3) {
+                    for (int l = 1; l < FRAMESIZE - w +1; l = l+1) {
+                        MyRectangle[] rect = new MyRectangle[2];
+                        MyRectangle main = new MyRectangle(w, h, l, a, -1);   
+                        MyRectangle black = new MyRectangle(w, h+a/3, l, a/3, 3);
+                        rect[0] = main;
+                        rect[1] = black;
+                        Feature feature = new Feature(0,0,0,0,0,false,false, null);
+                        feature.setRectanglesList(rect);
+                        allPossibleFeature.add(feature);
+                    }
+                }
+            }
+        }   
+        System.out.println(allPossibleFeature.size());
+    }
+    
+    public void generateFeatureType5() {
+        for (int h = 0; h < FRAMESIZE; h++) {
+            for (int w = 0; w < FRAMESIZE; w++) {
+                for (int a = 2; a < FRAMESIZE - h +1; a = a+2) {
+                    for (int l = 2; l < FRAMESIZE - w +1; l = l+2) {
+                        MyRectangle[] rect = new MyRectangle[3];
+                        MyRectangle main = new MyRectangle(w, h, l, a, -1);   
+                        MyRectangle black = new MyRectangle(w+l/2, h, l/2, a/2, 2);
+                        MyRectangle black2 = new MyRectangle(w, h+a/2,l/2,a/2, 2);
+                        rect[0] = main;
+                        rect[1] = black;
+                        rect[2] = black2;
+                        Feature feature = new Feature(0,0,0,0,0,false,false, null);
+                        feature.setRectanglesList(rect);
+                        allPossibleFeature.add(feature);
+                    }
+                }
+            }
+        }   
+        System.out.println(allPossibleFeature.size());
+    }
+    
+    public ArrayList<Feature> getList() {
+        return allPossibleFeature;
+    }
+
+
+}

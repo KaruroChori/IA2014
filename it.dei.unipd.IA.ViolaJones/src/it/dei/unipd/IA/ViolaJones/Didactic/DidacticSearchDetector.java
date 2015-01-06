@@ -42,7 +42,7 @@ import org.jdom2.JDOMException;
 /**
  * Questa classe costruisce il classificatore ed esegue la ricerca dei volti
  */
-public class DidacticDetector extends JFrame {
+public class DidacticSearchDetector extends JFrame {
 
     private Point searchRectangleInitialSize;
     private ArrayList<Stage> stages;
@@ -61,7 +61,7 @@ public class DidacticDetector extends JFrame {
      * Il costruttore principale prende in input una stringa con il percorso del file
      * xml contenente i dati che andranno a costrutire il classificatore.
      */
-    public DidacticDetector(File img, String percorso) {
+    public DidacticSearchDetector(File img, String percorso) {
         Document haarcascade_xml = null;
         SAXBuilder sxb = new SAXBuilder();
         try {
@@ -95,7 +95,7 @@ public class DidacticDetector extends JFrame {
         try {
             ImageIO.write(nrm.getFilteredImage(), "JPG", new File("normalized.jpg"));
         } catch (IOException ex) {
-            Logger.getLogger(DidacticDetector.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DidacticSearchDetector.class.getName()).log(Level.SEVERE, null, ex);
         }
         IntegralImage intImg = new IntegralImage(nrm.getNormalizeMatrixIMage());
         intImg.getMatrixIntegralImage();
@@ -106,7 +106,7 @@ public class DidacticDetector extends JFrame {
         setSize(image.getWidth(), image.getHeight());
         setResizable(false);
         setVisible(true);
-        findFace(intImg.getMatrixIntegralImageGray(),
+        findFaces(intImg.getMatrixIntegralImageGray(),
                 intImg.getSquaredMatrixIntegralImageGray(), 1.435f, 1.2f, .10f, 2);
     }
 
@@ -190,7 +190,7 @@ public class DidacticDetector extends JFrame {
      * @param minimalNumberOfRectanglesToBeConsideredNeighbors
      * @return rectanglesUnitedList
      */
-    public ArrayList<Rectangle> findFace(int[][] grayIntegralImage, int[][] squaredGrayIntegralImage,
+    public ArrayList<Rectangle> findFaces(int[][] grayIntegralImage, int[][] squaredGrayIntegralImage,
             float baseScale, float scala_inc, float incrementa, int minimalNumberOfRectanglesToBeConsideredNeighbors) {
         int width = grayIntegralImage.length;
         int height = grayIntegralImage[0].length;
@@ -226,7 +226,7 @@ public class DidacticDetector extends JFrame {
                     featurePart3 = null;
                     /*
                      * Interroga l'immagine corrispondente ad ogni posizione del rettangolo di ricerca,
-                     * se essa passed tutti gli stadi (costruiti nel metodo buildClassifier
+                     * se essa passa tutti gli stadi (costruiti nel metodo buildClassifier
                      * a partire dal file xml contente la cascata di classificatori) allora in quel caso 
                      * viene aggiunto il corrispondente rettangolo alla lista dei rettangoli contenti 
                      * un presunto volto.
@@ -402,10 +402,6 @@ public class DidacticDetector extends JFrame {
         return stages;
     }
 
-    public static void main(String[] args) throws IOException {
-        DidacticDetector dd = new DidacticDetector(new File("img2.jpg"), "haarcascade_frontalface_alt2.xml");
-    }
-
     private BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height, type);
         Graphics2D g = resizedImage.createGraphics();
@@ -490,6 +486,10 @@ public class DidacticDetector extends JFrame {
 
         }
 
+    }
+    
+    public static void main(String[] args) throws IOException {
+        DidacticSearchDetector dd = new DidacticSearchDetector(new File("img.jpg"), "haarcascade_frontalface_alt2.xml");
     }
 
 }

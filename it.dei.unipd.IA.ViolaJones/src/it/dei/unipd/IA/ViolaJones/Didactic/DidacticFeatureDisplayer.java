@@ -28,7 +28,7 @@ import it.dei.unipd.IA.ViolaJones.Detector.Tree;
  * delle varie fasi dell'agoritmo.
  */
 
-public class DidacticDisplayer extends JFrame {
+public class DidacticFeatureDisplayer extends JFrame {
 
     private Detector detector;
     private ArrayList<Rectangle> allPossibleRectangle;
@@ -45,7 +45,7 @@ public class DidacticDisplayer extends JFrame {
     private Rectangle featurePart2;
     private Rectangle featurePart3;
 
-    public DidacticDisplayer(File img, String XMLFile) {
+    public DidacticFeatureDisplayer(File img, String XMLFile) {
         image = null;
         try {
             image = ImageIO.read(img);
@@ -66,11 +66,11 @@ public class DidacticDisplayer extends JFrame {
         try {
             ImageIO.write(nrm.getFilteredImage(), "JPG", new File("normalized.jpg"));
         } catch (IOException ex) {
-            Logger.getLogger(DidacticDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DidacticFeatureDisplayer.class.getName()).log(Level.SEVERE, null, ex);
         }
         IntegralImage intImg = new IntegralImage(nrm.getNormalizeMatrixIMage());
         intImg.getMatrixIntegralImage();
-        detector.trovaVolti(intImg.getMatrixIntegralImageGray(),
+        detector.findFaces(intImg.getMatrixIntegralImageGray(),
                 intImg.getSquaredMatrixIntegralImageGray(), 1.435f, 1.2f, .10f, 2);
         allPossibleRectangle = detector.getAllPossibleRect();
         sizeChangePosition = detector.getsizeChangePosition();
@@ -85,7 +85,7 @@ public class DidacticDisplayer extends JFrame {
     }
 
     public static void main(String[] args) throws IOException {
-        DidacticDisplayer dd = new DidacticDisplayer(new File("img2.jpg"), "haarcascade_frontalface_alt2.xml");
+        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File("img.jpg"), "haarcascade_frontalface_alt2.xml");
         dd.render();
     }
 
