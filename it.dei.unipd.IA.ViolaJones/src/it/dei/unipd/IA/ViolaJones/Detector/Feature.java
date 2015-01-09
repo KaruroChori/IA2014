@@ -20,6 +20,8 @@ public class Feature {
     int rightNode;
     boolean leftValuePresent;
     boolean rightValuePresent;
+    
+    
 
     /**
      * Una feature è posta ad ogni nodo di un albero, è caratterizzata da una
@@ -122,4 +124,5 @@ public class Feature {
     public MyRectangle[] getScaledFeature() {
         return scaledRectangles;
     }
+    
 }

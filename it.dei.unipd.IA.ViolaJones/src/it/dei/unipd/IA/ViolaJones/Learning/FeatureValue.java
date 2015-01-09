@@ -22,6 +22,10 @@ public class FeatureValue implements Comparable<FeatureValue>{
         return value;
     }
     
+    public void setValue(int value) {
+        this.value = value;
+    }
+    
     public int compare(FeatureValue fv1, FeatureValue fv2) {
         int v1 = fv1.getValue();
         int v2 = fv2.getValue();

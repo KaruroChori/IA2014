@@ -1,7 +1,11 @@
 package it.dei.unipd.IA.ViolaJones.Learning;
 
+
 import java.io.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -21,30 +25,70 @@ public class test extends JFrame {
     private Rectangle rect2;
     private Rectangle rect3;
     private GenerateFeature gf;
+    private ArrayList<WeakClassifier> allWeakClassifier;
+    private ArrayList<Feature> features;
+    public static int ld;
 
-    public test() {
+    public test(int lp, int ln) {
+        ld = ln;
         gf = new GenerateFeature();
+        System.out.println("Feature create!\n\n\n");
+        features = gf.getList();
+	System.out.println(features.size());
+        ArrayList<Image> positiveImage = new ArrayList<Image>();
+        ArrayList<Image> negativeImage = new ArrayList<Image>();
+        for (int i = 0; i < lp; i++) {
+            String source = String.format("face" + "%04d", i+1);            
+            File img = new File("faces/"+source+".gif");
+            try {
+                BufferedImage image = ImageIO.read(img);
+                positiveImage.add(new Image(image, 1));
+            } catch (IOException e) {
+                System.out.println("Error"+source);
+            }
+        }
+        for (int i = 0; i < ln; i++) {
+            String source = String.format("nonface" + "%04d", i+1);
+            File img = new File("nonfaces/"+source+".gif");
+            try {
+                BufferedImage image = ImageIO.read(img);
+                negativeImage.add(new Image(image, - 1));
+            } catch (IOException e) {
+                System.out.println("Error"+source);
+            }
+        }
+        System.out.println("Immagini processate!!\n\n\n");
+        Cascade cs = new Cascade();
+        ViolaJones boost = new ViolaJones(positiveImage, negativeImage, 1000);
+        Cascade cs1 = boost.buildCascade(0.005, 0.999, 0.00001, cs);
+        ArrayList<ArrayList<Feature>> cascata = cs1.getCascade();
+        for (int i = 0; i < cascata.size(); i++) {
+            for (int j = 0; j < cascata.get(i).size(); j++) {
+                features.add(cascata.get(i).get(j));
+            }
+        }        
+        System.out.println("Training finito!\n\n\n");
         DrawPane d = new DrawPane();
         setContentPane(d);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(800,600);
         setResizable(false);
         setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
-        test dd = new test();
+        test dd = new test(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
         dd.render();
     }
 
     public void render() {
         rect3 = null;
-        for (int i = 0; i < gf.getList().size(); i++) {
-            for (int z = 0; z < gf.getList().get(i).getSize(); z = z + 3) {
-                rect = gf.getList().get(i).getRectangle(z).convert();
-                rect2 = gf.getList().get(i).getRectangle(z + 1).convert();
-                if (gf.getList().get(i).getSize() == 3) {
-                    rect3 = gf.getList().get(i).getRectangle(z + 2).convert();
+        for (int i = 0; i < features.size(); i++) {
+            for (int z = 0; z < features.get(i).getSize(); z = z + 3) {
+                rect = features.get(i).getRectangle(z).convert();
+                rect2 = features.get(i).getRectangle(z + 1).convert();
+                if (features.get(i).getSize() == 3) {
+                    rect3 = features.get(i).getRectangle(z + 2).convert();
                 }
                 getContentPane().repaint();
                 try {

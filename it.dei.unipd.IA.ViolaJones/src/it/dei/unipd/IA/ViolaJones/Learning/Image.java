@@ -24,8 +24,12 @@ class Image {
         width = img.getWidth();
         height = img.getHeight();
         matrixImage = new int[width][height];
+        grayIntegralImage = new int[width][height];
+        squaredGrayIntegralImage = new int[width][height];
         getMatrix();
         getGrayMatrixImage();
+        convertAlreadyGrayImageInToGrayMatrixImage();
+        generateMatrixIntegralImage();
         rectanglesSum = 0;
         this.isPositive = isPositive;
     }
@@ -53,8 +57,19 @@ class Image {
         } 
         return matrixImage;
     }
+    
+    private int[][] convertAlreadyGrayImageInToGrayMatrixImage() {
+        for (int w = 0; w < width; w++) {
+            for (int h = 0; h < height; h++) {
+                int color = matrixImage[w][h];
+                int grey = (color >> 16) & 0xFF;   
+                matrixImage[w][h] = grey;
+            }
+        } 
+        return matrixImage;
+    }
      
-    public void getMatrixIntegralImage() {
+    public void generateMatrixIntegralImage() {
         for(int w = 0; w < width; w++) {
             int sumOfColumn=0;
             int sumOfColumn2=0;
@@ -80,17 +95,34 @@ class Image {
         for (int n = 0; n < feature.getSize(); n++) {
             MyRectangle rectangle = feature.getRectangle(n);
             int rectangleX1 =  rectangle.x;
-            int rectangleX2 = (rectangle.x + rectangle.width);
+            int rectangleX2 = (rectangle.x + rectangle.width - 1);
             int rectangleY1 = rectangle.y;
-            int rectangleY2 = (rectangle.y + rectangle.height);
+            int rectangleY2 = (rectangle.y + rectangle.height - 1);
+            try {
             rectanglesSum += (int) ((grayIntegralImage[rectangleX1][rectangleY1]
                     + grayIntegralImage[rectangleX2][rectangleY2]
                     - grayIntegralImage[rectangleX1][rectangleY2]
                     - grayIntegralImage[rectangleX2][rectangleY1])
                     * rectangle.weight);
+            } catch (java.lang.ArrayIndexOutOfBoundsException ex){
+                System.out.println("Errore");
+            }
         }
         return rectanglesSum;
     }
+    
+    public float evaluateTrainedFeature(Feature feature) {
+        int val = applyFeature(feature);
+        float tmp;
+        if (feature.getConfronto() * val < feature.getConfronto() * feature.getThreshold()) {
+            tmp = 1;
+        } else {
+            tmp = 0;
+        }
+        return tmp * (float)feature.getWeight();
+    }
+    
+    
     
     public int getType() {
         return isPositive;

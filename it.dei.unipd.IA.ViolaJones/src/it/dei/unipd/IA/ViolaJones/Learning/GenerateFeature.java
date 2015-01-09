@@ -24,8 +24,8 @@ public class GenerateFeature {
     public void generateFeatureType1() {
         for (int h = 0; h < FRAMESIZE; h++) {
             for (int w = 0; w < FRAMESIZE; w++) {
-                for (int a = 1; a < FRAMESIZE - h +1; a = a+1) {
-                    for (int l = 2; l < FRAMESIZE - w +1; l = l+2) {
+                for (int a = 1; a < FRAMESIZE - h + 1; a = a+1) {
+                    for (int l = 2; l < FRAMESIZE - w + 1; l = l+2) {
                         MyRectangle[] rect = new MyRectangle[2];
                         MyRectangle main = new MyRectangle(w, h, l, a, -1);   
                         MyRectangle black = new MyRectangle(w+l/2, h, l/2, a, 2);
@@ -33,19 +33,21 @@ public class GenerateFeature {
                         rect[1] = black;
                         Feature feature = new Feature(0,0,0,0,0,false,false, null);
                         feature.setRectanglesList(rect);
+                        //System.out.println(main.x + " " + main.y + " " + main.width + " " + main.height);
+                        //System.out.println(black.x + " " + black.y + " " + black.width + " " + black.height);
                         allPossibleFeature.add(feature);
                     }
                 }
             }
         }
-        System.out.println(allPossibleFeature.size());
+        System.out.println(allPossibleFeature.size()+"\n\n");
     }
     
     public void generateFeatureType2() {
         for (int h = 0; h < FRAMESIZE; h++) {
             for (int w = 0; w < FRAMESIZE; w++) {
-                for (int a = 2; a < FRAMESIZE - h +1; a = a+2) {
-                    for (int l = 1; l < FRAMESIZE - w +1; l = l+1) {
+                for (int a = 2; a < FRAMESIZE - h + 1; a = a+2) {
+                    for (int l = 1; l < FRAMESIZE - w + 1; l = l+1) {
                         MyRectangle[] rect = new MyRectangle[2];
                         MyRectangle main = new MyRectangle(w, h, l, a, -1);   
                         MyRectangle black = new MyRectangle(w, h+a/2, l, a/2, 2);
@@ -53,19 +55,21 @@ public class GenerateFeature {
                         rect[1] = black;
                         Feature feature = new Feature(0,0,0,0,0,false,false, null);
                         feature.setRectanglesList(rect);
+                        //System.out.println(main.x + " " + main.y + " " + main.width + " " + main.height);
+                        //System.out.println(black.x + " " + black.y + " " + black.width + " " + black.height);
                         allPossibleFeature.add(feature);
                     }
                 }
             }
         }   
-        System.out.println(allPossibleFeature.size());
+        System.out.println(allPossibleFeature.size()+"\n\n");
     }
     
     public void generateFeatureType3() {
         for (int h = 0; h < FRAMESIZE; h++) {
             for (int w = 0; w < FRAMESIZE; w++) {
-                for (int a = 1; a < FRAMESIZE - h +1; a = a+1) {
-                    for (int l = 3; l < FRAMESIZE - w +1; l = l+3) {
+                for (int a = 1; a < FRAMESIZE - h + 1; a = a+1) {
+                    for (int l = 3; l < FRAMESIZE - w + 1; l = l+3) {
                         MyRectangle[] rect = new MyRectangle[2];
                         MyRectangle main = new MyRectangle(w, h, l, a, -1);   
                         MyRectangle black = new MyRectangle(w+l/3, h, l/3, a, 3);
@@ -73,19 +77,21 @@ public class GenerateFeature {
                         rect[1] = black;
                         Feature feature = new Feature(0,0,0,0,0,false,false, null);
                         feature.setRectanglesList(rect);
+                        //System.out.println(main.x + " " + main.y + " " + main.width + " " + main.height);
+                        //System.out.println(black.x + " " + black.y + " " + black.width + " " + black.height);
                         allPossibleFeature.add(feature);
                     }
                 }
             }
         }   
-        System.out.println(allPossibleFeature.size());
+        System.out.println(allPossibleFeature.size()+"\n\n");
     }
     
     public void generateFeatureType4() {
         for (int h = 0; h < FRAMESIZE; h++) {
             for (int w = 0; w < FRAMESIZE; w++) {
-                for (int a = 3; a < FRAMESIZE - h +1; a = a+3) {
-                    for (int l = 1; l < FRAMESIZE - w +1; l = l+1) {
+                for (int a = 3; a < FRAMESIZE - h + 1; a = a+3) {
+                    for (int l = 1; l < FRAMESIZE - w + 1; l = l+1) {
                         MyRectangle[] rect = new MyRectangle[2];
                         MyRectangle main = new MyRectangle(w, h, l, a, -1);   
                         MyRectangle black = new MyRectangle(w, h+a/3, l, a/3, 3);
@@ -93,19 +99,21 @@ public class GenerateFeature {
                         rect[1] = black;
                         Feature feature = new Feature(0,0,0,0,0,false,false, null);
                         feature.setRectanglesList(rect);
+                        //System.out.println(main.x + " " + main.y + " " + main.width + " " + main.height);
+                        //System.out.println(black.x + " " + black.y + " " + black.width + " " + black.height);
                         allPossibleFeature.add(feature);
                     }
                 }
             }
         }   
-        System.out.println(allPossibleFeature.size());
+        System.out.println(allPossibleFeature.size()+"\n\n");
     }
     
     public void generateFeatureType5() {
         for (int h = 0; h < FRAMESIZE; h++) {
             for (int w = 0; w < FRAMESIZE; w++) {
-                for (int a = 2; a < FRAMESIZE - h +1; a = a+2) {
-                    for (int l = 2; l < FRAMESIZE - w +1; l = l+2) {
+                for (int a = 2; a < FRAMESIZE - h + 1; a = a+2) {
+                    for (int l = 2; l < FRAMESIZE - w + 1; l = l+2) {
                         MyRectangle[] rect = new MyRectangle[3];
                         MyRectangle main = new MyRectangle(w, h, l, a, -1);   
                         MyRectangle black = new MyRectangle(w+l/2, h, l/2, a/2, 2);
@@ -115,12 +123,15 @@ public class GenerateFeature {
                         rect[2] = black2;
                         Feature feature = new Feature(0,0,0,0,0,false,false, null);
                         feature.setRectanglesList(rect);
+                        //System.out.println(main.x + " " + main.y + " " + main.width + " " + main.height);
+                        //System.out.println(black.x + " " + black.y + " " + black.width + " " + black.height);
+                        //System.out.println(black2.x + " " + black2.y + " " + black2.width + " " + black2.height);
                         allPossibleFeature.add(feature);
                     }
                 }
             }
         }   
-        System.out.println(allPossibleFeature.size());
+        System.out.println(allPossibleFeature.size()+"\n\n");
     }
     
     public ArrayList<Feature> getList() {

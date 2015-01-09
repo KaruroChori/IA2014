@@ -71,7 +71,7 @@ public class DidacticFeatureDisplayer extends JFrame {
         IntegralImage intImg = new IntegralImage(nrm.getNormalizeMatrixIMage());
         intImg.getMatrixIntegralImage();
         detector.findFaces(intImg.getMatrixIntegralImageGray(),
-                intImg.getSquaredMatrixIntegralImageGray(), 1.435f, 1.2f, .10f, 2);
+                intImg.getSquaredMatrixIntegralImageGray(), 1.2f,1.1f,.05f, 2);
         allPossibleRectangle = detector.getAllPossibleRect();
         sizeChangePosition = detector.getsizeChangePosition();
         rectangleList = detector.getRectangleList();
@@ -84,10 +84,10 @@ public class DidacticFeatureDisplayer extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) throws IOException {
-        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File("img.jpg"), "haarcascade_frontalface_alt2.xml");
+    /*public static void main(String[] args) throws IOException {
+        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File("img3.jpg"), "haarcascade_frontalface_default.xml");
         dd.render();
-    }
+    }*/
 
     private BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height, type);
@@ -165,14 +165,14 @@ public class DidacticFeatureDisplayer extends JFrame {
              int x = (int) (rect.x * scale) + imageX;
              int y = (int) (rect.y * scale) + imageY;
              g1.drawRect(x, y, w, h);*/
-            for (int i = 0; i < rectangleList.size(); i++) {
+            /*for (int i = 0; i < rectangleList.size(); i++) {
                 int wf = (int) (rectangleList.get(i).width * scale);
                 int hf = (int) (rectangleList.get(i).height * scale);
                 int xf = (int) (rectangleList.get(i).x * scale) + imageX;
                 int yf = (int) (rectangleList.get(i).y * scale) + imageY;
                 g1.setColor(Color.blue);
                 g1.drawRect(xf, yf, wf, hf);
-            }
+            }*/
             for (int i = 0; i < rectangleUnitedList.size(); i++) {
                 int wf = (int) (rectangleUnitedList.get(i).width * scale);
                 int hf = (int) (rectangleUnitedList.get(i).height * scale);

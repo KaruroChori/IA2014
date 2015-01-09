@@ -23,6 +23,7 @@ public class Feature {
     int rightNode;
     boolean leftValuePresent;
     boolean rightValuePresent;
+    private int confronto;
 
     /**
      * Una feature è posta ad ogni nodo di un albero, è caratterizzata da una
@@ -155,12 +156,20 @@ public class Feature {
         this.weightValue = weightValue;
     }
     
-     public int getP() {
+     public int getPolarity() {
         return p;
     }
     
-    public void setP(int p) {
+    public void setPolarity(int p) {
         this.p = p;
+    }
+    
+    public void setConfronto(int confronto) {
+        this.confronto = confronto;
+    }
+    
+    public int getConfronto() {
+        return confronto;
     }
 }
 
