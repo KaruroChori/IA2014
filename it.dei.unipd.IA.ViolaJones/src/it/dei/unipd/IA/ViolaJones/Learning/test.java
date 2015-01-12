@@ -76,10 +76,10 @@ public class test extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         test dd = new test(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         dd.render();
-    }
+    }*/
 
     public void render() {
         try {

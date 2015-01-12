@@ -16,6 +16,7 @@ public class MedianFilter {
         width = img.length;
         height = img[0].length;
         filteredMatrixGrayImage = new int[width][height];
+        getFilteredMatrix(3);
     }
 
 
@@ -75,12 +76,6 @@ public class MedianFilter {
         }
     }
     
-    //FA UN BUON LAVORO CON UNA FILTRO DI DIMENSIONI 9x9 MA VA SOPRA IL SECONDO E MEZZO,
-    //PERCHÈ BISOGNA MANTENERE ORDINATO UN ARRAY
-
-    //EDIT Karurochori: No. Basta il calcolo della mediana. Esistono algoritmi O(n) o randomizzati O(log(n)) per farlo. 
-    //Ho usato un altro piccolo trucco per evitare di dover leggere tutti i dati ogni volta. Ne parliamo venerdì. Funziona più veloce 
-    //e c'è ancora un buon margine di miglioramento.
     public int[][] getFilteredMatrix(int dimension) {
         int[] window = new int[dimension*dimension];
         int[] window2 = new int[dimension*dimension];
@@ -116,7 +111,7 @@ public class MedianFilter {
             }         
         }
         long end = System.nanoTime();
-        System.out.println((end-start)/1000000000.0);
+        //System.out.println((end-start)/1000000000.0);
         return filteredMatrixGrayImage;
     }
     

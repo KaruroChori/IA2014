@@ -110,7 +110,6 @@ public class Detector {
                 stage.addTree(tree);
             }
             stages.add(stage);
-            System.out.println("Stages" + stages.size());
         }
     }
 

@@ -28,7 +28,7 @@ public class AdaBoost {
 
         ArrayList<Feature> solution = new ArrayList<Feature>();
 
-        ArrayList<Boolean> validFeature = new ArrayList<Boolean>();
+        //ArrayList<Boolean> validFeature = new ArrayList<Boolean>();
 
         /*
          * Inizializzo i due array che conterrano i pesi delle singole immagini.
@@ -64,27 +64,27 @@ public class AdaBoost {
             Boolean broken = false;
             for (int j = 0; j < positive.size(); j++) {
                 int val = positive.get(j).evaluateFeature(features.get(i));
-                if (val == -Integer.MAX_VALUE / 2) {
+                /*if (val == -Integer.MAX_VALUE / 2) {
                     broken = true;
                     System.out.println("Broken");
-                }
+                }*/
                 thisFeaturesValuesForAllImages.add(new FeatureValue(j, val, true));
             }
             for (int j = 0; j < brNegative; j++) {
                 int val = negative.get(j).evaluateFeature(features.get(i));
-                if (val == -Integer.MAX_VALUE / 2) {
+                /*if (val == -Integer.MAX_VALUE / 2) {
                     broken = true;
                     System.out.println("Broken");
 
-                }
+                }*/
                 thisFeaturesValuesForAllImages.add(new FeatureValue(j, val, false));
             }
-            if (broken == true) {
+            /*if (broken == true) {
                 for (int z = 0; z < thisFeaturesValuesForAllImages.size(); z++) {
                     thisFeaturesValuesForAllImages.get(i).setValue((int) Math.random() % 100);
                 }
-            }
-            validFeature.add(!broken);
+            }*/
+            //validFeature.add(!broken);
             Collections.sort(thisFeaturesValuesForAllImages);
             //System.out.println(i+"     sorting done! \n");
             featureValues.add(thisFeaturesValuesForAllImages);
@@ -99,9 +99,9 @@ public class AdaBoost {
             int bestFeature = -1, polarity = 0;
             float error = 1e9f, threshold = 0.f;
             for (int j = 0; j < featureValues.size(); j++) {
-                if (validFeature.get(j) == false) {
+                /*if (validFeature.get(j) == false) {
                     continue;
-                }
+                }*/
                 float[] total = new float[2];
                 total[0] = sumWeights(positiveWeights);
                 total[1] = sumWeights(negativeWeights);

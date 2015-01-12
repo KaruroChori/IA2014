@@ -16,6 +16,9 @@ import it.dei.unipd.IA.ViolaJones.Detector.Detector;
 import it.dei.unipd.IA.ViolaJones.Detector.Feature;
 import it.dei.unipd.IA.ViolaJones.Detector.Stage;
 import it.dei.unipd.IA.ViolaJones.Detector.Tree;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.GrayScaleImageEqualization;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.MedianFilter;
+import it.dei.unipd.IA.ViolaJones.ImageUtil.NoiseReduction;
 
 /**
  * Questa classe ha puro scopo dimostrativo e didattico.Essa infatti permette di 
@@ -49,11 +52,11 @@ public class DidacticFeatureDisplayer extends JFrame {
         image = null;
         try {
             image = ImageIO.read(img);
-            /*BufferedImage originalImage = ImageIO.read(img);
+            BufferedImage originalImage = ImageIO.read(img);
              int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
              BufferedImage resizeImageJpg = resizeImage(originalImage, BufferedImage.TYPE_INT_RGB, 800, 600);
              ImageIO.write(resizeImageJpg, "jpg", img);
-             image = ImageIO.read(img);*/
+             image = ImageIO.read(img);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -61,6 +64,29 @@ public class DidacticFeatureDisplayer extends JFrame {
         detector = new Detector(XMLFile);
         ImageToMatrix mtxImg = new ImageToMatrix(image);
         GrayImage grImg = new GrayImage(mtxImg.getMatrix());
+        try {
+            ImageIO.write(grImg.getGrayImage(), "JPG", new File("grayimage.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(DidacticFeatureDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        NoiseReduction reductor = new NoiseReduction(grImg.getGrayMatrixImage());
+        try {
+            ImageIO.write(reductor.getNoNoiseGrayImage(), "JPG", new File("noisereduction.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(DidacticFeatureDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        GrayScaleImageEqualization equalizer = new GrayScaleImageEqualization(grImg.getGrayMatrixImage());
+        try {
+            ImageIO.write(equalizer.getImageEqualized(), "JPG", new File("equalized.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(DidacticFeatureDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        MedianFilter median = new MedianFilter(grImg.getGrayMatrixImage());
+        try {
+            ImageIO.write(median.getFilteredImage(), "JPG", new File("medianfilter.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(DidacticFeatureDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
         NormalizeImage nrm = new NormalizeImage(grImg.getGrayMatrixImage());
         nrm.ApplyFilter(3);
         try {
@@ -85,7 +111,7 @@ public class DidacticFeatureDisplayer extends JFrame {
     }
 
     public static void main(String[] args) throws IOException {
-        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File("img3.jpg"), "haarcascade_frontalface_default.xml");
+        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File(args[0]+".jpg"), "haarcascade_frontalface_default.xml");
         dd.render();
     }
 
@@ -165,14 +191,14 @@ public class DidacticFeatureDisplayer extends JFrame {
              int x = (int) (rect.x * scale) + imageX;
              int y = (int) (rect.y * scale) + imageY;
              g1.drawRect(x, y, w, h);*/
-            /*for (int i = 0; i < rectangleList.size(); i++) {
+            for (int i = 0; i < rectangleList.size(); i++) {
                 int wf = (int) (rectangleList.get(i).width * scale);
                 int hf = (int) (rectangleList.get(i).height * scale);
                 int xf = (int) (rectangleList.get(i).x * scale) + imageX;
                 int yf = (int) (rectangleList.get(i).y * scale) + imageY;
                 g1.setColor(Color.blue);
                 g1.drawRect(xf, yf, wf, hf);
-            }*/
+            }
             for (int i = 0; i < rectangleUnitedList.size(); i++) {
                 int wf = (int) (rectangleUnitedList.get(i).width * scale);
                 int hf = (int) (rectangleUnitedList.get(i).height * scale);

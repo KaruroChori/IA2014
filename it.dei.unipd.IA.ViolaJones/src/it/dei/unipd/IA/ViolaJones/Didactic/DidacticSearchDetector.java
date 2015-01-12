@@ -232,10 +232,14 @@ public class DidacticSearchDetector extends JFrame {
                      * un presunto volto.
                      */
                     for (int s = 0; s < stages.size(); s++) {
+                        Stage stage = getStages().get(s);
+                        if (!stage.pass(grayIntegralImage, squaredGrayIntegralImage, w, h, scale)) {
+                            passed = false;
+                            break;
+                        }
                         featurePart1 = null;
                         featurePart2 = null;
-                        featurePart3 = null;
-                        Stage stage = getStages().get(s);
+                        featurePart3 = null;                        
                         ArrayList<Tree> treesList = stage.getTreesList();
                         for (int t = 0; t < treesList.size(); t++) {
                             featurePart1 = null;
@@ -274,10 +278,6 @@ public class DidacticSearchDetector extends JFrame {
                             } catch (InterruptedException ex) {
                                 Thread.currentThread().interrupt();
                             }
-                        }
-                        if (!stage.pass(grayIntegralImage, squaredGrayIntegralImage, w, h, scale)) {
-                            passed = false;
-                            break;
                         }
 
                     }
@@ -488,7 +488,7 @@ public class DidacticSearchDetector extends JFrame {
 
     }
     
-    /*public static void main(String[] args) throws IOException {
-        DidacticSearchDetector dd = new DidacticSearchDetector(new File("img.jpg"), "haarcascade_frontalface_alt2.xml");
-    }*/
+    public static void main(String[] args) throws IOException {
+        DidacticSearchDetector dd = new DidacticSearchDetector(new File(args[0]+".jpg"), "haarcascade_frontalface_default.xml");
+    }
 }

@@ -17,6 +17,7 @@ public class NoiseReduction {
         width = matrixGrayImage.length;
         height = matrixGrayImage[0].length;
         noNoiseMatrixGrayImage = new int[width][height];
+        getNoNoiseMatrixGrayImage();
     }
 
     /**
@@ -66,7 +67,7 @@ public class NoiseReduction {
         for (int h = 0; h < height; h++) {
             for (int w = 0; w < width; w++) {
                 int sum = noNoiseMatrixGrayImage[w][h];
-                int grayColor = ((0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8) | ((sum & 0xFF) << 0);
+                int grayColor = ((255 & 0xFF) << 24) | ((sum & 0xFF) << 16) | ((sum & 0xFF) << 8) | ((sum & 0xFF) << 0);
                 noNoiseGrayImage.setRGB(w, h, grayColor);
             }
         }

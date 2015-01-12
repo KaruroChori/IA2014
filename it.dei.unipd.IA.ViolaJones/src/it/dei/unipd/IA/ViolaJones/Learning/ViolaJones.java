@@ -80,43 +80,43 @@ public class ViolaJones {
         double[] tmpRet = new double[2];
 
         while (tmpF > overallFalsePositiveRate) {
-            //System.out.println("Ciclo esterno start iteration j-esima "+ tmpF 
-            //        +" > "+ overallFalsePositiveRate);
+            System.out.println("Ciclo esterno start iteration j-esima "+ tmpF 
+                    +" > "+ overallFalsePositiveRate);
             i++;
             n = 0;
             tmpF = lastF;
             cascade.getCascade().add(new ArrayList<Feature>());
 
             while (tmpF > (maximumFalsePositiveRateForLayer * lastF)) {
-                //System.out.println("Ciclo interno start iteration i-esima "+ tmpF 
-                //        +" > "+ maximumFalsePositiveRateForLayer*lastF);
+                System.out.println("Ciclo interno start iteration i-esima "+ tmpF 
+                        +" > "+ maximumFalsePositiveRateForLayer*lastF);
                 n += 15;
-                //System.out.println("Avvio AdaBoost");
+                System.out.println("Avvio AdaBoost");
                 cascade.getCascade().set(i, new AdaBoost().train(P, N, features, n));
                 cascade.getThresholdList().add(MAX);
-                decreaseThreshold(i, minimumDetectionRateForLayer * lastD, cascade);
-
+                double tmpThreshold = decreaseThreshold(i, minimumDetectionRateForLayer * lastD, cascade);
+                System.out.println("Threshold diminuita " + tmpThreshold);
                 tmpRet = evaluateOnTest(cascade);
 
                 tmpF = tmpRet[0];
                 tmpD = tmpRet[1];
-                //System.out.println("Ciclo interno end iteration i-esima " + tmpF 
-                //        +" > "+ maximumFalsePositiveRateForLayer*lastF);
+                System.out.println("Ciclo interno end iteration i-esima " + tmpF 
+                        +" > "+ maximumFalsePositiveRateForLayer*lastF);
             }
-            //System.out.println("Ciclo interno conluso"+ tmpF +" > "
-            //        + maximumFalsePositiveRateForLayer*lastF + " è falsa");
+            System.out.println("Ciclo interno conluso"+ tmpF +" > "
+                    + maximumFalsePositiveRateForLayer*lastF + " è falsa");
             N.clear();
             lastD = tmpD;
             lastF = tmpF;
             if (tmpF > overallFalsePositiveRate) {
                 evaluateOnTrainNegative(N, cascade);
-                //System.out.println("Reducing overfitting");
+                System.out.println("Reducing overfitting");
             }
-            //System.out.println("Ciclo esterno end iteration j-esima "+ tmpF +" > "
-            //        + overallFalsePositiveRate);
+            System.out.println("Ciclo esterno end iteration j-esima "+ tmpF +" > "
+                    + overallFalsePositiveRate);
         }
-        //System.out.println("Ciclo esterno concluso"+ tmpF +" > "
-        //        + overallFalsePositiveRate + " è falsa.");
+        System.out.println("Ciclo esterno concluso"+ tmpF +" > "
+                + overallFalsePositiveRate + " è falsa.");
         return cascade;
     }
 
@@ -235,23 +235,25 @@ public class ViolaJones {
      * @param minD
      * @param cascade
      */
-    private void decreaseThreshold(int ith, double minD, Cascade cascade) {
+    
+    private double decreaseThreshold(int ith, double minD, Cascade cascade) {
         int corrP;
         double tmpD;
-        double mid = 0;
+        double mid;
         double up = cascade.getCascade().get(ith).size() * 10;
         double down = 0;
         while ((up - down) > 1e-3) {
             cascade.getThresholdList().set(ith, (down + up) / 2);
             mid = (down + up) / 2;
-            //System.out.print("mid " + mid);
+            //System.out.println("mid " + mid);
             corrP = 0;
             for (int i = 0; i < positiveTest.size(); i++) {
                 if (evaluate(positiveTest.get(i), cascade)) {
                     corrP++;
                 }
             }
-            //System.out.print(" Threshold: " + cascade.getThresholdList().get(ith));
+            //System.out.println("coorP " + corrP);
+            //System.out.println("Threshold: " + cascade.getThresholdList().get(ith));
 
             tmpD = corrP / ((double) (positiveTest.size()));
 
@@ -260,12 +262,13 @@ public class ViolaJones {
             } else {
                 down = mid;
             }
-            //System.out.println(" tmp " + tmpD + " up " + up + " down " + down);
+            //System.out.println("tmp " + tmpD + " up " + up + " down " + down);
             //System.out.println();
 
         }
         cascade.getThresholdList().set(ith, down);
         mid = down;
+        return down;
     }
 
 }
