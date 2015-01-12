@@ -1,5 +1,11 @@
 package it.dei.unipd.IA.ViolaJones.ImageUtil;
 
+/**
+ * Data un immagine questa classe ne calcola l'immagine integrale e l'immagine
+ * integrale quadratica.
+ *
+ * @author enrico
+ */
 public class IntegralImage {
 
     /*
