@@ -9,8 +9,6 @@ import javax.imageio.ImageIO;
 /**
  * Questa classe si occupa di eseguire l'algoritmo di ViolaJones, generando la
  * cascata di weak classifier selezionati iterativamente mediante AdaBoost
- *
- * @author enrico
  */
 public class ViolaJones {
 

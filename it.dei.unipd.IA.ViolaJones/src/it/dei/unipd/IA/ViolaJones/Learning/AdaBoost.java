@@ -6,8 +6,6 @@ import java.util.Collections;
 /**
  * Questa classe implementa la variante di AdaBoost citata nel paper di
  * ViolaJones.
- *
- * @author enrico
  */
 public class AdaBoost {
 

@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 /**
  * Questa classe si occupa fornisce i metodi per convertire l'immagine in
  * matrice.
- *
- * @author enrico
  */
 public class ImageToMatrix {
 

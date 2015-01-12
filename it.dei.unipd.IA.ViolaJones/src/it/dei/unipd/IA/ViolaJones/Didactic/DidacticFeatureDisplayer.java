@@ -52,11 +52,11 @@ public class DidacticFeatureDisplayer extends JFrame {
         image = null;
         try {
             image = ImageIO.read(img);
-            BufferedImage originalImage = ImageIO.read(img);
+            /*BufferedImage originalImage = ImageIO.read(img);
              int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
              BufferedImage resizeImageJpg = resizeImage(originalImage, BufferedImage.TYPE_INT_RGB, 800, 600);
              ImageIO.write(resizeImageJpg, "jpg", img);
-             image = ImageIO.read(img);
+             image = ImageIO.read(img);*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -111,7 +111,7 @@ public class DidacticFeatureDisplayer extends JFrame {
     }
 
     public static void main(String[] args) throws IOException {
-        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File(args[0]+".jpg"), "haarcascade_frontalface_default.xml");
+        DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File("img"+".jpg"), "haarcascade_frontalface_default.xml");
         dd.render();
     }
 

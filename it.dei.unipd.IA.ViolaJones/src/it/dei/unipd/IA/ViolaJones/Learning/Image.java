@@ -5,8 +5,6 @@ import java.awt.image.BufferedImage;
 /**
  * Questa classe contiene un immagine, ne fornisce i metodi di modifica e di
  * accesso.
- *
- * @author enrico
  */
 class Image {
 

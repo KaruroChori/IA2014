@@ -8,8 +8,6 @@ import java.util.Arrays;
 /**
  * Questa classe crea il Median Filter che ha lo scopo di sopprimere il rumore
  * sale e pepe.
- *
- * @author enrico
  */
 public class MedianFilter {
 

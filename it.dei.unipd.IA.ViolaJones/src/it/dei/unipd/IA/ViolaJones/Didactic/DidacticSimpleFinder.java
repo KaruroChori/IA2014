@@ -39,11 +39,11 @@ public class DidacticSimpleFinder extends JFrame {
         image = null;
         try {
             image = ImageIO.read(img);
-            BufferedImage originalImage = ImageIO.read(img);
+            /*BufferedImage originalImage = ImageIO.read(img);
              int type = originalImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : originalImage.getType();
              BufferedImage resizeImageJpg = resizeImage(originalImage, BufferedImage.TYPE_INT_RGB, 800, 600);
              ImageIO.write(resizeImageJpg, "jpg", img);
-             image = ImageIO.read(img);
+             image = ImageIO.read(img);*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,15 +85,17 @@ public class DidacticSimpleFinder extends JFrame {
         intImg.getMatrixIntegralImage();
         detector.findFaces(intImg.getMatrixIntegralImageGray(),
                 intImg.getSquaredMatrixIntegralImageGray(), 1.2f,1.1f,.05f, 2);
+        rectangleList = detector.getRectangleList();
+        rectangleUnitedList = detector.getRectangleUnitedList();
         setContentPane(d);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(image.getWidth(), image.getHeight());
-        setResizable(false);
+        //setResizable(false);
         setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
-        DidacticSimpleFinder dd = new DidacticSimpleFinder(new File(args[0]+".jpg"), 
+        DidacticSimpleFinder dd = new DidacticSimpleFinder(new File("img"+".jpg"), 
                 "haarcascade_frontalface_default.xml");
     }
 

@@ -489,6 +489,6 @@ public class DidacticSearchDetector extends JFrame {
     }
     
     public static void main(String[] args) throws IOException {
-        DidacticSearchDetector dd = new DidacticSearchDetector(new File(args[0]+".jpg"), "haarcascade_frontalface_default.xml");
+        DidacticSearchDetector dd = new DidacticSearchDetector(new File("img"+".jpg"), "haarcascade_frontalface_default.xml");
     }
 }

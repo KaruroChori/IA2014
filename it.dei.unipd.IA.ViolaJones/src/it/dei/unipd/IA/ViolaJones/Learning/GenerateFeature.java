@@ -6,8 +6,6 @@ import java.util.ArrayList;
  * Questa classe si occupa di generare tutte le possibili feature che possono
  * esistere in un quadrato 24x24, il loro numero è, in accordo con il paper
  * originale dell'algoritmo 162.336.
- *
- * @author enrico
  */
 public class GenerateFeature {
 

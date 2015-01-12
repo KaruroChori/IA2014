@@ -3,8 +3,6 @@ package it.dei.unipd.IA.ViolaJones.Learning;
 /**
  * Questa classe rappresenta una feature utilizzata dall'algoritmo di
  * ViolaJones.
- *
- * @author enrico
  */
 public class Feature {
 

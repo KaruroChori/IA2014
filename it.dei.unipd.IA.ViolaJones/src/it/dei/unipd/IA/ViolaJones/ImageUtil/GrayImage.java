@@ -5,8 +5,6 @@ import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 /**
  * Questa classe effettua la conversione dell'immagine in scala di grigi.
- *
- * @author enrico
  */
 public class GrayImage {
 

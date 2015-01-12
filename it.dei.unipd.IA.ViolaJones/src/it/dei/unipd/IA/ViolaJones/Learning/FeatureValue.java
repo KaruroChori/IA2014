@@ -4,8 +4,6 @@ package it.dei.unipd.IA.ViolaJones.Learning;
  * Questa è una classe di supporto e temporanea, semplicemente conserva tre
  * valori necessari durante AdaBoost, successivamente questi valori saranno
  * trasferiti in un oggetto di tipo Feature.
- *
- * @author enrico
  */
 public class FeatureValue implements Comparable<FeatureValue> {
 

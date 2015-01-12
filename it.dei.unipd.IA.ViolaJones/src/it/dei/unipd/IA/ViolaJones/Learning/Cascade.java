@@ -6,8 +6,6 @@ import java.util.ArrayList;
  * Classe che rappresenta una cascata di classificatori.E' caratterizzata da più
  * livelli, ogni livello ha una serie di feature, ogni livello ha una certa
  * soglia, che se superata permette l'accesso al livello successivo
- *
- * @author enrico
  */
 public class Cascade {
 

@@ -21,7 +21,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 
 /**
- * Questa classe costruisce il classificatore ed esegue la ricerca dei volti
+ * Questa classe costruisce il classificatore ed esegue la ricerca dei volti.
  */
 public class Detector {
 
