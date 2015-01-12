@@ -19,8 +19,9 @@ public class MyRectangle {
     protected float weight;
 
     /**
-     * Semplice costruttore che inizializza tutte le variabili necessarie a descrivere
-     * un oggetto di tipo MyRectangle.
+     * Semplice costruttore che inizializza tutte le variabili necessarie a
+     * descrivere un oggetto di tipo MyRectangle.
+     *
      * @param x
      * @param y
      * @param width
