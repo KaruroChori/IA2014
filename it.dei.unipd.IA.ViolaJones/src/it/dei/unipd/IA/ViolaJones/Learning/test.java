@@ -1,6 +1,5 @@
 package it.dei.unipd.IA.ViolaJones.Learning;
 
-
 import java.io.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,15 +8,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
- * Questa classe ha puro scopo dimostrativo e didattico.Essa infatti permette di
- * vedere il risultato dell'algoritmo su una data immagine.Oltre a questo mostra
- * anche tutte le feature valutate dall'algoritmo senza badare al reale ordine
- * cronologico in cui sono state valutate, ma più che altro vorrebbe
- * sottolineare come la maggior densità di feature valutate si ha su quelle zone
- * che poi effettivamente contengono un volto.Tuttavia questa classe non è
- * sufficiente a scopo didattico e per questo va accompagnata con una seconda
- * classe che permette di visualizzare il procedimento cronoligico (e quindi non
- * per densità) delle varie fasi dell'agoritmo.
+ * Semplice classe di test, esegue la generazione delle feature, il caricamento
+ * dei sample, la fase di training (e testing) e visualizza le feature che
+ * compongono la cascata di weak classifier.
  */
 public class test extends JFrame {
 
@@ -25,63 +18,75 @@ public class test extends JFrame {
     private Rectangle rect2;
     private Rectangle rect3;
     private GenerateFeature gf;
-    private ArrayList<WeakClassifier> allWeakClassifier;
     private ArrayList<Feature> features;
     public static int ld;
 
     public test(int lp, int ln) {
+        /*try {
+         System.setOut(new PrintStream(new File("output-file2.txt")));
+         } catch (Exception e) {
+         e.printStackTrace();
+         }*/
         ld = ln;
         gf = new GenerateFeature();
         System.out.println("Feature create!\n\n\n");
         features = gf.getList();
-	System.out.println(features.size());
+        System.out.println(features.size());
         ArrayList<Image> positiveImage = new ArrayList<Image>();
         ArrayList<Image> negativeImage = new ArrayList<Image>();
         for (int i = 0; i < lp; i++) {
-            String source = String.format("face" + "%04d", i+1);            
-            File img = new File("faces/"+source+".gif");
+            String source = String.format("face" + "%04d", i + 1);
+            File img = new File("faces/" + source + ".gif");
             try {
                 BufferedImage image = ImageIO.read(img);
                 positiveImage.add(new Image(image, 1));
             } catch (IOException e) {
-                System.out.println("Error"+source);
+                System.out.println("Error" + source);
             }
         }
         for (int i = 0; i < ln; i++) {
-            String source = String.format("nonface" + "%04d", i+1);
-            File img = new File("nonfaces/"+source+".gif");
+            String source = String.format("nonface" + "%04d", i + 1);
+            File img = new File("nonfaces/" + source + ".gif");
             try {
                 BufferedImage image = ImageIO.read(img);
                 negativeImage.add(new Image(image, - 1));
             } catch (IOException e) {
-                System.out.println("Error"+source);
+                System.out.println("Error" + source);
             }
         }
         System.out.println("Immagini processate!!\n\n\n");
         Cascade cs = new Cascade();
-        ViolaJones boost = new ViolaJones(positiveImage, negativeImage, 1000);
-        Cascade cs1 = boost.buildCascade(0.005, 0.999, 0.00001, cs);
+        ViolaJones startTraining = new ViolaJones(positiveImage, negativeImage, 5, features);
+        Cascade cs1 = startTraining.buildCascade(0.15, 0.850, 0.00015, cs);
         ArrayList<ArrayList<Feature>> cascata = cs1.getCascade();
+        features.clear();
+
         for (int i = 0; i < cascata.size(); i++) {
             for (int j = 0; j < cascata.get(i).size(); j++) {
                 features.add(cascata.get(i).get(j));
             }
-        }        
+        }
+        System.out.println(features.size());
         System.out.println("Training finito!\n\n\n");
         DrawPane d = new DrawPane();
         setContentPane(d);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800,600);
+        setSize(100, 100);
         setResizable(false);
         setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
-        test dd = new test(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
+        test dd = new test(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         dd.render();
     }
 
     public void render() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
         rect3 = null;
         for (int i = 0; i < features.size(); i++) {
             for (int z = 0; z < features.get(i).getSize(); z = z + 3) {
@@ -92,7 +97,7 @@ public class test extends JFrame {
                 }
                 getContentPane().repaint();
                 try {
-                    Thread.sleep(1);
+                    Thread.sleep(10);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }

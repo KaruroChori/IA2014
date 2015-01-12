@@ -45,67 +45,6 @@ public class AdaBoost {
             negativeWeights[i] = initialNegativeWeight;
         }
         
-        
-        /*
-         * Questa è un alternativa, funziona, ma è da perfezionare, comunque l'idea 
-         * non è male, anzi. In pratica faccio quanto consigliato da enoch.
-         */
-        
-        
-        /*ArrayList<ArrayList<FeatureValue>> featureValues = new ArrayList<ArrayList<FeatureValue>>();
-        ArrayList<FeatureValue> thisFeaturesValuesForAllImages = new ArrayList<FeatureValue>();
-        Boolean broken = false;
-        try {
-            System.setOut(new PrintStream(new File("output-file.txt")));
-        } catch (Exception e) {
-            System.exit(0);
-        }
-        String s = "";
-        for (int j = 0; j < positive.size(); j++) {
-            for (int n = 0; n < features.size(); n++) {
-                int val = positive.get(j).applyFeature(features.get(n));
-                /*if (val == -Short.MAX_VALUE / 2) {
-                    broken = true;
-                    System.out.println("Broken");
-                }
-                if (broken == true) {
-                    for (int z = 0; z < thisFeaturesValuesForAllImages.size(); z++) {
-                        thisFeaturesValuesForAllImages.get(n).setValue((int) Math.random() % 100);
-                    }
-                }/*
-                //thisFeaturesValuesForAllImages.add(new FeatureValue(j, val, true));
-                s += "" + j + "-" +  val + "-true\n";
-                //System.out.println(j + "-" +  val + "-true");
-                if (j%100 == 0 && n == 162335) {
-                    System.out.print(s);
-                    s = "";
-                }
-            }
-        }
-        System.exit(0);
-
-        
-        for (int j = 0; j < negative.size(); j++) {
-            for (int n = 0; n < features.size(); n++) {
-                int val = negative.get(j).applyFeature(features.get(n));
-                if (val == -Short.MAX_VALUE / 2) {
-                    broken = true;
-                    System.out.println("Broken");
-                }
-                if (broken == true) {
-                    for (int z = 0; z < thisFeaturesValuesForAllImages.size(); z++) {
-                        thisFeaturesValuesForAllImages.get(n).setValue((int) Math.random() % 100);
-                    }
-                }
-                thisFeaturesValuesForAllImages.add(new FeatureValue(j, val, false));
-                System.out.println(j + " " + n+"\n");
-            }
-        }*/
-        
-        
-        
-        
-        
         /*
          * Creo una matrice di FeatureValues, dove ogni cella è il valore di una 
          * feature in una determinata immagini. La matrice avrà quindi dimensioni 
@@ -116,33 +55,30 @@ public class AdaBoost {
             ArrayList<FeatureValue> thisFeaturesValuesForAllImages = new ArrayList<FeatureValue>();
             Boolean broken = false;
             for (int j = 0; j < positive.size(); j++) {
-                int val = positive.get(j).applyFeature(features.get(i));
-                if (val == -Short.MAX_VALUE/2) {
+                int val = positive.get(j).evaluateFeature(features.get(i));
+                if (val == -Integer.MAX_VALUE/2) {
                     broken = true;
                     System.out.println("Broken");
                 }
                 thisFeaturesValuesForAllImages.add(new FeatureValue(j, val, true));
-                System.out.println(""+j+"-"+val+"-true");
             }
             for (int j = 0; j < brNegative; j++) {
-                int val = negative.get(j).applyFeature(features.get(i));
-                if (val == -Short.MAX_VALUE/2) {
+                int val = negative.get(j).evaluateFeature(features.get(i));
+                if (val == -Integer.MAX_VALUE/2) {
                     broken = true;
                     System.out.println("Broken");
 
                 }
                 thisFeaturesValuesForAllImages.add(new FeatureValue(j, val, false));
-                System.out.println(""+j+"-"+val+"-false");
             }
             if ( broken == true ) {
-                for(int z=0; z<thisFeaturesValuesForAllImages.size(); z++) {
+                for(int z = 0; z < thisFeaturesValuesForAllImages.size(); z++) {
                      thisFeaturesValuesForAllImages.get(i).setValue((int)Math.random() % 100);        
                 }                                           
             }
             validFeature.add(!broken);
-            System.out.println(i+"\n");
             Collections.sort(thisFeaturesValuesForAllImages);
-            System.out.println(i+"sorting done! \n");
+            //System.out.println(i+"     sorting done! \n");
             featureValues.add(thisFeaturesValuesForAllImages);
         }
         
@@ -166,7 +102,7 @@ public class AdaBoost {
                     float val2 = curr[1] + (total[0] - curr[0]);
 
                     float curErr = Math.min(val1, val2);
-
+                    
                     if (featureValues.get(j).get(k).isPositive() == true) {
                         curr[0] += positiveWeights[index];
                     } else {
@@ -176,8 +112,9 @@ public class AdaBoost {
                     if (k != 0 && featureValues.get(j).get(k - 1).getValue() == featureValues.get(j).get(k).getValue()) {
                         continue;
                     }
-		    //System.out.println(error +  "   " + curErr);
+		    
                     if (curErr < error) {
+                        //System.out.println(curErr +  "  < " + error + "?");
                         if (k == 0) {
                             threshold = featureValues.get(j).get(k).getValue();
                         } else {
@@ -191,12 +128,13 @@ public class AdaBoost {
                         }
                         error = (float) curErr;
                         bestFeature = j;
+                        //System.out.println("Selezionata la featureValue " +j);
                     }
                 }
             }
             if (error != 0) {
                 float beta = error / (1 - error);
-                double alpha = Math.log(1.0f / beta);
+                float alpha = (float)Math.log(1.0f / beta);
 
                 for (int k = 0; k < featureValues.get(bestFeature).size(); k++) {
                     int val = featureValues.get(bestFeature).get(k).getValue();
@@ -219,12 +157,12 @@ public class AdaBoost {
             } else {
                 solution.add(features.get(bestFeature));
                 solution.get(solution.size() - 1).setThreshold(threshold);
-                solution.get(solution.size() - 1).setWeight(1e5);
+                solution.get(solution.size() - 1).setWeight(1e5f);
                 solution.get(solution.size() - 1).setPolarity(polarity);
-                System.out.println(i + " = " + (T-1) + "l'errore deve essere zero alla fine delle operazioni.");
+                //System.out.println(i + " = " + (T-1) + "l'errore deve essere zero alla fine delle operazioni.");
                 break;
             }
-            System.out.println("Feature scelta e aggiunta!");
+            //System.out.println("Feature " + bestFeature + " scelta e aggiunta!");
         }
        
         return solution;

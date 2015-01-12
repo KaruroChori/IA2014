@@ -84,10 +84,10 @@ public class DidacticFeatureDisplayer extends JFrame {
         setVisible(true);
     }
 
-    /*public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         DidacticFeatureDisplayer dd = new DidacticFeatureDisplayer(new File("img3.jpg"), "haarcascade_frontalface_default.xml");
         dd.render();
-    }*/
+    }
 
     private BufferedImage resizeImage(BufferedImage originalImage, int type, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height, type);

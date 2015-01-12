@@ -20,8 +20,6 @@ public class Feature {
     int rightNode;
     boolean leftValuePresent;
     boolean rightValuePresent;
-    
-    
 
     /**
      * Una feature è posta ad ogni nodo di un albero, è caratterizzata da una
@@ -117,12 +115,23 @@ public class Feature {
         rectangles[numberOfRectangles++] = rectangle;
     }
 
+    /**
+     * Ritorna la lista di rettangoli che compongono la feature.
+     *
+     * @retun rectangles
+     */
     public MyRectangle[] getFeature() {
         return rectangles;
     }
 
+    /**
+     * Ritorna la lista di rettangoli scalati rispetto alla dimensione della
+     * finestra di ricercache compongono la feature.
+     *
+     * @return scaledRectangles
+     */
     public MyRectangle[] getScaledFeature() {
         return scaledRectangles;
     }
-    
+
 }

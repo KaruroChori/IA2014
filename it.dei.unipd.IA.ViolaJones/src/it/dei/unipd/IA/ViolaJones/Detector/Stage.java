@@ -63,6 +63,11 @@ public class Stage {
         return passed;
     }
 
+    /**
+     * Ritorna la lista degli alberi associati a questo stage.
+     *
+     * @return trees
+     */
     public ArrayList<Tree> getTreesList() {
         return trees;
     }

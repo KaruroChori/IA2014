@@ -9,9 +9,24 @@ import java.awt.Rectangle;
  */
 public class MyRectangle {
 
+    /*
+     * Coordinate e caratteritiche del rettangolo.
+     */
     protected int x, y, width, height;
+    /*
+     * Peso (e tipo) del rettangolo.
+     */
     protected float weight;
 
+    /**
+     * Semplice costruttore che inizializza tutte le variabili necessarie a descrivere
+     * un oggetto di tipo MyRectangle.
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param weight
+     */
     public MyRectangle(int x, int y, int width, int height, float weight) {
         this.x = x;
         this.y = y;
